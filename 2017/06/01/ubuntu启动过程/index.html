@@ -1,0 +1,430 @@
+	<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ubuntu启动过程 | liliechao&#39;s Blog</title>
+  <meta name="author" content="liliechao">
+  
+  <meta name="description" content="liliechao&#39;s Blog">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="ubuntu启动过程"/>
+  <meta property="og:site_name" content="liliechao&#39;s Blog"/>
+
+  
+  
+		<!-- favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#009688">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+		<meta name="theme-color" content="#009688">
+		<!-- favicon end -->
+    <!-- <link href="/favicon.ico" rel="icon"> -->
+  
+
+  <!-- toc -->
+  <link rel="stylesheet" href="/libs/tocify/jquery.tocify.css" media="screen" type="text/css">
+
+  <!-- <link rel="stylesheet" href="/libs/bs/css/bootstrap.min.css" media="screen" type="text/css"> -->
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" media="screen" type="text/css">
+
+  <!-- material design -->
+	<!-- <link rel="stylesheet" href="/libs/bs-material/css/ripples.min.css" media="screen" type="text/css"> -->
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap-material/0.3.0/css/ripples.min.css" media="screen" type="text/css">
+  <!-- <link rel="stylesheet" href="/libs/bs-material/css/material.min.css" media="screen" type="text/css"> -->
+	<link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap-material/0.3.0/css/material.min.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/highlight.light.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  
+
+  
+
+  <script src="//apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/libs/jquery-2.0.3.min.js" type="text/javascript"><\/script>')</script>
+
+</head>
+
+ 	<body>
+	  <nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">菜单</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">liliechao&#39;s Blog</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                
+                <li>
+                    <a href="/" title="">
+                    <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/archives" title="">
+                    <i class="fa fa-list"></i>存档
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/about" title="">
+                    <i class="fa fa-info-circle"></i>关于
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/atom.xml" title="这是一个订阅源">
+                    <i class="fa fa-rss"></i>RSS
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+	  <div class="container" >
+	    <div class="row">
+	
+	<div class="col-md-9 center-content">
+	
+
+		<div class="content">
+			<!-- index -->
+		   
+
+			  		<h2>ubuntu启动过程</h2>
+					
+					<div>
+						<span class="post-time">2017-06-01 16:33:11</span>
+					</div>	
+					
+
+					<div class="article-content">
+						<p>本文讲述了从按下开机按钮到ubuntu（14.04 LTS）启动完毕的过程。grub 入门知识和设置进程开机启动方法。<br><a id="more"></a></p>
+<h2 id="计算机启动"><a href="#计算机启动" class="headerlink" title="计算机启动"></a>计算机启动</h2><p>主要分为4个步骤</p>
+<ol>
+<li>加载BIOS<br>上个世纪70年代初，”只读内存”（read-only memory，缩写为ROM）发明，开机程序被刷入ROM芯片，计算机通电后，第一件事就是读取它。<br>这块芯片里的程序叫做”基本輸出輸入系統”（Basic Input/Output System），简称为BIOS。<br>BIOS程序首先检查，计算机硬件能否满足运行的基本条件，这叫做”硬件自检”（Power-On Self-Test），缩写为POST。<br>硬件自检完成后，BIOS把控制权转交给下一阶段的启动程序。这时，BIOS需要知道，”下一阶段的启动程序”具体存放在哪一个设备。也就是说，BIOS需要有一个外部储存设备的排序，排在前面的设备就是优先转交控制权的设备。这种排序叫做”启动顺序”（Boot Sequence）。<br>打开BIOS的操作界面，里面有一项就是”设定启动顺序”。</li>
+<li>读取MBR<br>BIOS按照”启动顺序”，把控制权转交给排在第一位的储存设备。<br>这时，计算机读取该设备的第一个扇区，也就是读取最前面的512个字节。如果这512个字节的最后两个字节是0x55和0xAA，表明这个设备可以用于启动；如果不是，表明设备不能用于启动，控制权于是被转交给”启动顺序”中的下一个设备。<br>这最前面的512个字节，就叫做”主引导记录”（Master boot record，缩写为MBR）。<br>“主引导记录”只有512个字节，放不了太多东西。它的主要作用是，告诉计算机到硬盘的哪一个位置去找操作系统。<br>主引导记录由三个部分组成：<br> （1） 第1-446字节：调用操作系统的机器码。<br> （2） 第447-510字节：分区表（Partition table）。<br> （3） 第511-512字节：主引导记录签名（0x55和0xAA）。<br>其中，第二部分”分区表”的作用，是将硬盘分成若干个区。</li>
+<li>Bootloader<br>在这种情况下，计算机读取”主引导记录”前面446字节的机器码之后，不再把控制权转交给某一个分区，而是运行事先安装的”启动管理器”（boot loader），由用户选择启动哪一个操作系统。<br>Boot Loader 就是在操作系统内核运行之前运行的一段小程序。通过这段小程序，我们可以初始化硬件设备、建立内存空间的映射图，从而将系统的软硬件环境带到一个合适的状态，以便为最终调用操作系统内核做好一切准备。<br>Boot Loader有若干种，其中Grub、Lilo和spfdisk是常见的Loader。Linux环境中，目前最流行的启动管理器是Grub。  </li>
+<li>加载内核<br>内核的加载请见后文<strong>grub入门</strong>部分。<br>内核加载后，接开始操作系统初始化，根据进程的优先级启动进程。详细请见下文。</li>
+</ol>
+<p>参考网址：  </p>
+<ol>
+<li><a href="http://blog.csdn.net/jandunlab/article/details/11899379" target="_blank" rel="external">ubuntu启动过程，操作系统启动讲解没细讲</a>  </li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html" target="_blank" rel="external">计算机启动过程</a></li>
+</ol>
+<h2 id="操作系统的启动"><a href="#操作系统的启动" class="headerlink" title="操作系统的启动"></a>操作系统的启动</h2><p>linux操作系统有3中方式：System V init，upstart，systemd<br>虽然本文讲述ubuntu 14.04 LTS启动过程，但查询过程中看到了其他操作系统的启动过程，这里也顺带讲述一下。</p>
+<h3 id="System-V-init-启动方式"><a href="#System-V-init-启动方式" class="headerlink" title="System V init 启动方式"></a>System V init 启动方式</h3><p>Debian System V 启动过程：<br>内核文件加载以后，就开始运行第一个程序 /sbin/init，它的作用是初始化系统环境。<br>由于init是第一个运行的程序，它的进程编号（pid）就是1。其他所有进程都从它衍生，都是它的子进程。</p>
+<p>许多程序需要开机启动。它们在Windows叫做”服务”（service），在Linux就叫做”守护进程”（daemon）。<br>init进程的一大任务，就是去运行这些开机启动的程序。但是，不同的场合需要启动不同的程序，比如用作服务器时，需要启动Apache，用作桌面就不需要。Linux允许为不同的场合，分配不同的开机启动程序，这就叫做”运行级别”（runlevel）。也就是说，启动时根据”运行级别”，确定要运行哪些程序。</p>
+<p>Linux预置七种运行级别（0-6）。一般来说，0是关机，1是单用户模式（也就是维护模式），6是重启。运行级别2-5，各个发行版不太一样，对于Debian来说，都是同样的多用户模式（也就是正常模式）。<br>Debian init进程首先读取文件 /etc/inittab，它是运行级别的设置文件。如果你打开它，可以看到第一行是这样的：</p>
+<pre><code>id:2:initdefault:
+
+对于CentOS系统来说： 
+
+init程序类型：  
+1. SysV: init, CentOS 5之前  
+配置文件：/etc/inittab  
+2. Upstart: init,CentOS6  
+配置文件：/etc/inittab, /etc/init/*.conf  
+3. Systemd：systemd, CentOS 7  
+配置文件：/usr/lib/systemd/system；/etc/systemd/system  
+</code></pre><p>initdefault的值是2，表明系统启动时的运行级别为2。如果需要指定其他级别，可以手动修改这个值。<br>那么，运行级别2有些什么程序呢，系统怎么知道每个级别应该加载哪些程序呢？……回答是每个运行级别在/etc目录下面，都有一个对应的子目录，指定要加载的程序。  </p>
+<pre><code>/etc/rc0.d  
+/etc/rc1.d  
+/etc/rc2.d  
+/etc/rc3.d  
+/etc/rc4.d  
+/etc/rc5.d  
+/etc/rc6.d
+</code></pre><p>上面目录名中的”rc”，表示run command（运行程序），最后的d表示directory（目录）。下面让我们看看 /etc/rc2.d 目录中到底指定了哪些程序。</p>
+<pre><code>$ ls  /etc/rc2.d  
+
+README  
+S01motd  
+S13rpcbind  
+S14nfs-common  
+S16binfmt-support  
+S16rsyslog  
+S16sudo  
+S17apache2  
+S18acpid
+</code></pre><p>可以看到，除了第一个文件README以外，其他文件名都是”字母S+两位数字+程序名”的形式。<br>字母S表示Start，也就是启动的意思（启动脚本的运行参数为start），如果这个位置是字母K，就代表Kill（关闭），即如果从其他运行级别切换过来，需要关闭的程序（启动脚本的运行参数为stop）。<br>后面的两位数字表示处理顺序，数字越小越早处理，所以第一个启动的程序是motd，然后是rpcbing、nfs……数字相同时，则按照程序名的字母顺序启动，所以rsyslog会先于sudo启动。<br>这个目录里的所有文件（除了README），就是启动时要加载的程序。如果想增加或删除某些程序，不建议手动修改 /etc/rcN.d 目录，最好是用一些专门命令进行管理（参考这里和这里）。</p>
+<p>/etc/inittab文件相关知识</p>
+<p>每一行定义一种action以及与之对应的process<br>id : runlevel : action : process</p>
+<pre><code>id:代表init的主要工作选项，只是简单代表说明
+runlevel：在那些等级下运行
+action： initdefault:代表默认的runlevel设置值
+sysinit:代表系统初始化的操作选项
+ctrlaltdel:代表ctrl+alt+del三个按键是否可以重新启动
+wait:代表后面设置的命令项目必须要执行完毕才能继续下面的其他操作
+respawn:代表后边字段的命令可以无限制的重新启动
+process：可以进行的命令
+</code></pre><p>前面提到，七种预设的”运行级别”各自有一个目录，存放需要开机启动的程序。<br>不难想到，如果多个”运行级别”需要启动同一个程序，那么这个程序的启动脚本，就会在每一个目录里都有一个拷贝。这样会造成管理上的困扰：如果要修改启动脚本，岂不是每个目录都要改一遍？<br>Linux的解决办法，就是七个 /etc/rcN.d（N 取0，1 … 6） 目录里列出的程序，都设为链接文件，指向另外一个目录 /etc/init.d ，真正的启动脚本都统一放在这个目录中。init进程逐一加载开机启动程序，其实就是运行这个目录里的启动脚本。</p>
+<p>下面就是链接文件真正的指向。</p>
+<pre><code>$ ls -l /etc/rc2.d  
+
+README  
+S01motd -&gt; ../init.d/motd  
+S13rpcbind -&gt; ../init.d/rpcbind  
+S14nfs-common -&gt; ../init.d/nfs-common  
+S16binfmt-support -&gt; ../init.d/binfmt-support  
+S16rsyslog -&gt; ../init.d/rsyslog  
+S16sudo -&gt; ../init.d/sudo  
+S17apache2 -&gt; ../init.d/apache2  
+S18acpid -&gt; ../init.d/acpid  
+</code></pre><p>这样做的另一个好处，就是如果你要手动关闭或重启某个进程，直接到目录 /etc/init.d 中寻找启动脚本即可。比如，我要重启Apache服务器，就运行下面的命令：</p>
+<pre><code>$ sudo /etc/init.d/apache2 restart
+</code></pre><p>　　<br>/etc/init.d 这个目录名最后一个字母d，是directory的意思，表示这是一个目录，用来与程序 /etc/init 区分。</p>
+<h3 id="upstart-启动方式"><a href="#upstart-启动方式" class="headerlink" title="upstart 启动方式"></a>upstart 启动方式</h3><p>可以看到在sysvinit中，服务是按照顺序来执行的，这很影响效率。另一方面，sysvinit中，服务是预设的，不能实时启动（比如在系统被挂载了一个磁盘的时候自动启动）。而Upstart可以解决这些问题。它是基于事件机制的，可以按需启动服务，性能和很多其他方面都比sysvinit强，所以upstart被后来的Ubuntu等linux发行版采用。</p>
+<p>基于事件的 Upstart 是 /sbin/init 守护进程的替代品，它仅为在需要那些服务的时候启动服务而生，（或者当它们在运行时管理它们），以及处理发生的实践，因此 Upstart 优于基于依赖的 sysvinit 系统。</p>
+<p>一开始它是为 Ubuntu 发行版开发的，但在红帽企业版 Linux 6.0 中得到使用。尽管希望它能在所有 Linux 发行版中替代 sysvinit，但它已经被 systemd 超越。2014 年 2 月 14 日，Mark Shuttleworth（Canonical Ltd. 创建者）发布声明之后的 Ubuntu 发行版采用 systemd 作为默认初始化守护进程。</p>
+<p>由于 Sysv 启动脚本已经流行很长时间了，很多软件包中都包括了 Sysv 启动脚本。为了兼容这些软件， Upstart 提供了兼容模式：它可以运行保存在常用位置（/etc/rc.d/rc?.d, /etc/init.d/rc?.d, /etc/rc?.d或其它类似的位置）的Sysv 启动脚本。因此，如果我们安装了一个还没有 Upstart 配置脚本的软件，仍然可以用原来的方式启动它。</p>
+<p>在Upstart中，程序执行单位被称作作业(Job)，所有的init作业都必须放置于目录/etc/init/之下，使用Upstart自己的配置文件来描述Job内容。Upstart启动时，从 /etc/init/ 目录中读取各个Job的配置文件，获取所有Job。然后发出Startup信号，所有监听这个信号的作业会被执行。在作业执行过程中，作业本身也可以自己发出信号，其他监听这个信号的服务接着就会被启动执行。Upstart通过这样的方式来达到异步和实时控制作业的启动执行。</p>
+<p>比如在我的博客服务器中（精简）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span> ls -lh /etc/init/</div><div class="line">total 356K</div><div class="line">(...)</div><div class="line">-rw-r--r-- 1 root root  297 Feb  9  2013 cron.conf</div><div class="line">-rw-r--r-- 1 root root  489 Nov 11  2013 dbus.conf</div><div class="line">-rw-r--r-- 1 root root  273 Nov 19  2010 dmesg.conf</div><div class="line">-rw-r--r-- 1 root root 1.4K Apr 11  2014 failsafe.conf</div><div class="line">-rw-r--r-- 1 root root  267 Apr 11  2014 flush-early-job-log.conf</div><div class="line">-rw-r--r-- 1 root root 1.3K Mar 14  2012 friendly-recovery.conf</div><div class="line">-rw-r--r-- 1 root root  284 Jul 23  2013 hostname.conf</div><div class="line">-rw-r--r-- 1 root root  557 Apr 16  2014 hwclock.conf</div><div class="line">-rw-r--r-- 1 root root  444 Apr 16  2014 hwclock-save.conf</div><div class="line">-rw-r--r-- 1 root root  579 Aug 26  2014 irqbalance.conf</div><div class="line">-rw-r--r-- 1 root root  689 Apr 10  2014 kmod.conf</div><div class="line">-rw-r--r-- 1 root root  268 Feb 21  2014 mountall-bootclean.sh.conf</div><div class="line">-rw-r--r-- 1 root root 1.3K Feb 21  2014 mountall.conf</div><div class="line">(...)</div><div class="line">-rw-r--r-- 1 root root 1.8K Feb 19  2014 mysql.conf</div><div class="line">-rw-r--r-- 1 root root 2.5K Mar 20  2014 networking.conf</div><div class="line">-rw-r--r-- 1 root root  534 Feb 16  2014 passwd.conf</div><div class="line">(...)</div><div class="line">-rw-r--r-- 1 root root  661 Apr 11  2014 rc.conf</div><div class="line">(...)</div><div class="line">-rw-r--r-- 1 root root 1.6K Apr 11  2014 rc-sysinit.conf</div></pre></td></tr></table></figure>
+<p>这些”*.conf”都是作业配置文件，在这个文件中指出作业什么start，什么时候stop，主进程是什么等。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">xxxx:/etc/init$ ls | xargs grep "startup"</div><div class="line">friendly-recovery.conf:emits startup</div><div class="line">friendly-recovery.conf:    initctl emit startup</div><div class="line">hostname.conf:# This task is run on startup to set the system hostname from /etc/hostname,</div><div class="line">hostname.conf:start on startup</div><div class="line">kmod.conf:start on (startup</div><div class="line">mountall.conf:start on startup</div><div class="line">plymouth-ready.conf:start on startup or started plymouth-splash</div><div class="line">plymouth-upstart-bridge.conf:start on (startup</div><div class="line">udev-fallback-graphics.conf:# We only want this job to happen once per boot, hence 'startup and ...'.</div><div class="line">udev-fallback-graphics.conf:start on (startup and </div><div class="line">udev-finish.conf:start on (startup</div><div class="line">udevmonitor.conf:start on (startup</div><div class="line">udevtrigger.conf:start on (startup</div></pre></td></tr></table></figure>
+<p>作业hostname、kmod、mountall等都会监听startup信号(start on EVENT这个指令表示在EVENT发生时启动该程序)。Startup收集作业配置信息完成后，会发出”startup”信号，这些作业就会被执行了。</p>
+<p>你可能想，那其他程序怎么办？</p>
+<p>其他程序会监听这些程序发射的事件信号，当该事件发生时，那些程序也会被执行。比如mountall这个job就会发射”filesystem”这些类似的基础事件信号，这个代表着文件系统已经就绪了，很多其他作业（比如networking）都是监听这个信号，这样一级一级传递，启动程序就会被按照事件发生顺序一级一级的启动执行了。</p>
+<p>####兼容sysvinit  </p>
+<p>最开始我们说到Upstart是兼容sysvinit的，怎么做到的？</p>
+<p>在/etc/init/下有两个重要的作业： 作业 rc-sysinit 和 作业 rc</p>
+<p>我们看一下这两个文件内容：</p>
+<p><strong>作业rc-sysinit配置:</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line">XXXX:/etc/init$ cat rc-sysinit.conf </div><div class="line"><span class="meta">#</span> rc-sysinit - System V initialisation compatibility</div><div class="line"><span class="meta">#</span></div><div class="line"><span class="meta">#</span> This task runs the old System V-style system initialisation scripts,</div><div class="line"><span class="meta">#</span> and enters the default runlevel when finished.</div><div class="line"></div><div class="line">description    "System V initialisation compatibility"</div><div class="line">author        "Scott James Remnant &lt;scott@netsplit.com&gt;"</div><div class="line"></div><div class="line">start on (filesystem and static-network-up) or failsafe-boot</div><div class="line">stop on runlevel</div><div class="line"><span class="meta"></span></div><div class="line"># Default runlevel, this may be overriden on the kernel command-line</div><div class="line"><span class="meta">#</span> or by faking an old /etc/inittab entry</div><div class="line">env DEFAULT_RUNLEVEL=2</div><div class="line"></div><div class="line">emits runlevel</div><div class="line"><span class="meta"></span></div><div class="line"># There can be no previous runlevel here, but there might be old</div><div class="line"><span class="meta">#</span> information in /var/run/utmp that we pick up, and we don't want</div><div class="line"><span class="meta">#</span> that.</div><div class="line"><span class="meta">#</span></div><div class="line"><span class="meta">#</span> These override that</div><div class="line">env RUNLEVEL=</div><div class="line">env PREVLEVEL=</div><div class="line"></div><div class="line">console output</div><div class="line">env INIT_VERBOSE</div><div class="line"></div><div class="line">task</div><div class="line"></div><div class="line">script</div><div class="line">    # Check for default runlevel in /etc/inittab</div><div class="line">    if [ -r /etc/inittab ]</div><div class="line">    then</div><div class="line">    eval "$(sed -nre 's/^[^#][^:]*:([0-6sS]):initdefault:.*/DEFAULT_RUNLEVEL="\1";/p' /etc/inittab || true)"</div><div class="line">    fi</div><div class="line"></div><div class="line">    # Check kernel command-line for typical arguments</div><div class="line">    for ARG in $(cat /proc/cmdline)</div><div class="line">    do</div><div class="line">    case "$&#123;ARG&#125;" in</div><div class="line">    -b|emergency)</div><div class="line">        # Emergency shell</div><div class="line">        [ -n "$&#123;FROM_SINGLE_USER_MODE&#125;" ] || sulogin</div><div class="line">        ;;</div><div class="line">    [0123456sS])</div><div class="line">        # Override runlevel</div><div class="line">        DEFAULT_RUNLEVEL="$&#123;ARG&#125;"</div><div class="line">        ;;</div><div class="line">    -s|single)</div><div class="line">        # Single user mode</div><div class="line">        [ -n "$&#123;FROM_SINGLE_USER_MODE&#125;" ] || DEFAULT_RUNLEVEL=S</div><div class="line">        ;;</div><div class="line">    esac</div><div class="line">    done</div><div class="line"></div><div class="line">    # Run the system initialisation scripts</div><div class="line">    [ -n "$&#123;FROM_SINGLE_USER_MODE&#125;" ] || /etc/init.d/rcS</div><div class="line"></div><div class="line">    # Switch into the default runlevel</div><div class="line">    telinit "$&#123;DEFAULT_RUNLEVEL&#125;"</div><div class="line">end script</div></pre></td></tr></table></figure>
+<p><strong>作业rc的配置：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">XXXX:/etc/init$ cat rc.conf </div><div class="line"><span class="meta">#</span> rc - System V runlevel compatibility</div><div class="line"><span class="meta">#</span></div><div class="line"><span class="meta">#</span> This task runs the old System V-style rc script when changing between</div><div class="line"><span class="meta">#</span> runlevels.</div><div class="line"></div><div class="line">description    "System V runlevel compatibility"</div><div class="line">author        "Scott James Remnant &lt;scott@netsplit.com&gt;"</div><div class="line"></div><div class="line">emits deconfiguring-networking</div><div class="line">emits unmounted-remote-filesystems</div><div class="line"></div><div class="line">start on runlevel [0123456]</div><div class="line">stop on runlevel [!$RUNLEVEL]</div><div class="line"></div><div class="line">export RUNLEVEL</div><div class="line">export PREVLEVEL</div><div class="line"></div><div class="line">console output</div><div class="line">env INIT_VERBOSE</div><div class="line"></div><div class="line">task</div><div class="line"></div><div class="line">script</div><div class="line">if [ "$RUNLEVEL" = "0" -o "$RUNLEVEL" = "1" -o "$RUNLEVEL" = "6" ]; then</div><div class="line">    status plymouth-shutdown 2&gt;/dev/null &gt;/dev/null &amp;&amp; start wait-for-state WAITER=rc WAIT_FOR=plymouth-shutdown || :</div><div class="line">fi</div><div class="line">/etc/init.d/rc $RUNLEVEL</div><div class="line">end script</div></pre></td></tr></table></figure>
+<p>你不必看懂每个具体配置细节，只要知道这三个配置指令就可以了：</p>
+<p>start on EVENT： 在EVENT发生的时候启动该作业<br>stop on EVENT： 在EVENT发生的时候停止改作业<br>script … end script： 作业运行主程序脚本内容<br>所以根据以上配置，Upstart兼容sysvinit的过程是这样的：</p>
+<p>作业rc-sysinit在收到 “(filesystem and static-network-up) or failsafe-boot” 的信号之后由Upstart启动。一切正常的话，rc-sysinit通过telinit完成运行级别信号的发送。<br>作业rc在收到运行级别信号之后，由Upstart启动。然后rc通过运行/etc/init.d/rc $RUNLEVEL这个命令， 来完成/etc/rcN.d/下相应程序的启动。<br>这样，就完成了兼容sysvinit的过程。</p>
+<p>所以，在Upstart之下，你可以有2种方式添加系统服务程序：<br>按照System V 规则编写服务，并置于相应位置。<br>编写Upstart作业配置文件，置于 /etc/init/ 目录之下。</p>
+<p>Upstart 流程：<br><img src="https://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/image004.png" alt=""></p>
+<p>参考网址：  </p>
+<ol>
+<li><a href="http://monklof.com/post/14/" target="_blank" rel="external">linux System V init、upstart启动方式讲解</a>  </li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html" target="_blank" rel="external">Debian System V启动方式讲解</a>  </li>
+<li><a href="http://www.178linux.com/75355" target="_blank" rel="external">CetnOS6启动流程以及LVM下的fstab及boot恢复实验</a>  </li>
+<li><a href="https://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/" target="_blank" rel="external">浅析 Linux 初始化 init 系统，第 2 部分: UpStart</a>  </li>
+</ol>
+<h3 id="systemd-启动方式"><a href="#systemd-启动方式" class="headerlink" title="systemd 启动方式"></a>systemd 启动方式</h3><p>怎么查看系统使用 init 还是 systemd 方式启动的？<br><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201605/19/220710s7dekedg5y5odeys.png?_=5564751" alt="">  </p>
+<p>2014 年 2 月 14 日，Mark Shuttleworth（Canonical Ltd. 创建者）发布声明之后的 Ubuntu 发行版采用 systemd 作为默认初始化守护进程。</p>
+<p>systemd 是另外一个被多种主流 Linux 发行版采用的服务和系统管理器。它的目标是允许系统启动时多个任务尽可能并行（而 sysvinit 并非如此，sysvinit 一般比较慢，因为它每次只启动一个进程，而且会检查彼此之间是否有依赖，在启动其它服务之前还要等待守护进程启动），充当运行中系统动态资源管理的角色。</p>
+<p>因此，服务只在需要的时候启动，而不是系统启动时毫无缘由地启动（为了防止消耗系统资源）。</p>
+<p>要查看你系统中运行的原生 systemd 服务和 Sysv 服务，可以用以下的命令。<br><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201605/19/220738ljodjop7t3d39924.png?_=5564751" alt=""></p>
+<p>详细 systemd 启动信息请见参考网址2。</p>
+<p>参考网址：  </p>
+<ol>
+<li><a href="http://www.cnblogs.com/276815076/p/5564751.html" target="_blank" rel="external">通过 SysVinit、Systemd 和 Upstart 管理系统自启动进程和服务</a>  </li>
+<li><a href="https://linux.cn/article-5457-1.html" target="_blank" rel="external">走进Linux之systemd启动过程</a>  </li>
+</ol>
+<h2 id="grub-入门"><a href="#grub-入门" class="headerlink" title="grub 入门"></a>grub 入门</h2><p>grub一个来自GNU项目的多操作系统启动程序。GRUB是多启动规范的实现，它允许用户可以在计算机内同时拥有多个操作系统，并在计算机启动时选择希望运行的操作系统。GRUB可用于选择操作系统分区上的不同内核，也可用于向这些内核传递启动参数。</p>
+<p>系统的启动是从读取grub.cfg(Ubuntu下是grub.cfg,不同操作系统，类似功能的文件名可能是menu.lst或grub.lst)开始的，grub.cfg文件的位置是在/boot/grub目录下。如果电脑上安装的是双系统的话，也可以通过修改grub.cfg文件，改变系统的启动项的排列顺序、等待时间等。</p>
+<p>将文件打开后文件中有这么一段：(一开始 Windows 7 是在最下面的，我把 Windows 7 那项剪切到Ubuntu 的下面，这样每次启动的时候基本上就只要在第一第二项选择了)</p>
+<p><img src="http://img.blog.csdn.net/20130926092551781?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHNjeXc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>这是一个标准的ubuntu引导菜单，menuentry那一行显示了该项目的名称，insmod是Linux下的指令，是加载模块的意思。 </p>
+<p>我们已经知道，IDE接口的硬盘是hd表示，SATA和SCSI接口的硬盘都是sd表示，那为什么grub文件有一行“setroot=’(hd0,8)’”代码呢？不应该是“sd”吗？通过在网上查找的相关资料，对于grub文件来说，硬盘都是用hd表示的，磁盘号是从0开始计算的，分区号是则是从1开始计算的（grub2是从1开始计算的，grub1是从0开始计算的），而对于Linux内核来说，IDE硬盘是hd表示的，SATA硬盘是用sd表示的，磁盘序号从a开始计算的，分区号是从1开始计算的。我电脑中的Linux系统是 Ubuntu 12.04 LTS 版本，grub文件是grub2版本。所以grub文件中的（hd0，8）代表的是第一块硬盘上的第八个分区即sda8。</p>
+<p>search指令是寻找内核的意思，这就真正进入了Linux系统的引导过程，内核的存放位置是在/boot目录下。下面一行中的linux是一个指令，它告诉grub程序使用后面给出的内核，于是这个名为“vmlinuz-3.5.0-40-generic”的内核就被载入内存，并读取“root=UUID=abdb3fa2-45cd-447d-8cc5-83cf326195bd”这个分区的一些必要的文件。</p>
+<p>第一个启动项的最后一行的命令的意思是：用名为“/initrd.img-2.6.32-33-generic”的文件先在内存中构造一个“虚拟”的根文件系统，以便于内核检测完硬件信息后载入必需的模块等等。</p>
+<p>grub的工作到此结束，下面将由Linux内核接管电脑的控制权，开始初始化阶段。</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>删除挂载在逻辑卷的根下的/etc/fstab配置文件以及/boot/目录下的文件。手动修复。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mkdir /root/boot &amp;&amp; mv /boot/* /root/boot        #将boot下的所有文件移动到家目录下的boot中（boot需要创建）</div><div class="line">sync*3                                #同步数据到磁盘</div><div class="line">reboot                                #重启</div><div class="line"></div><div class="line">进入救援模式</div><div class="line">df                                    #查看挂载，发现并没有被挂载!</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/RMtLBfO.png" alt=""></p>
+<pre><code class="shell">ls /dev/mapper    &amp;&amp;                    #mapper是所有LVM存放的地方，我们可以查看有没有逻辑卷存在
+   lvdisplay                        lvdisplay命令查看LVM状态，发现都是不可用状态，并且很用容易看出根目录在哪个逻辑卷中
+       vgchage -ay                         g，也就是激活逻辑卷
+lvdisplay                            #再次确认LVM状态
+ls /dev/mapper                        #查看LVM设备
+   mount /dev/mapper/VolGroup-lv_root /mnt/sysimage        #根据查看到的信息将根挂载到/mnt/image（sysimage可以是其他挂载点）下 cd /mnt/sysimage                    #切换到操作系统根目录下
+ls                                    #查看是否是操作系统根目录
+vi etc/fstab                    #在当前目录下的etc下创建fstab文件，注意是当前目录而不是/
+    :r! ls /dev/mapper        #在末行模式下使用r！读取出LVM的名字
+    /dev/sda1  /boot  ext4  defaults 0 0
+    /dev/mapper/VolGroup-lv_root  / ext4 defaults 0 0
+    /dev/mapper/VolGroup-lv_swap swap  swap  defaults 0 0    #注意，所有的LVM信息都需要写入
+    wq            #保存退出
+sync*3        #同步磁盘，sync输入三次
+exit        #退出bash，进入菜单reboot重启，必须退出重启
+
+进入救援模式
+chroot    /mnt/sysimage/    #切根
+mount /dev/cdrom /mnt    #挂载光盘到/mnt
+rpm -ivh /mnt/Packages/kernel-2.6.32-642.e16.x886_64.rpm --force    #安装kernel包
+ls /boot        #查看boot下文件是否恢复
+grub-install /dev/sda    #修复grub
+退出并重启
+在grub后输入
+kernel /vmlinuz-2(tab补全) root=/dev/mapper/VoGroup-lv_root selinux=0
+initrd /init(tab补全)
+boot    #启动
+<span class="meta">#</span>注意，修复grub.conf文件时临时有效，如果想永久修复需要重新编辑/boot/grub/grub.conf
+    default=0
+    timeout=5
+    title CentOS68
+        kernel (hd0,0)/vmlinuz-.... ro root=/dev/vg0/root 
+        initrd /initramfs-...img
+</code></pre>
+<p>参考网址：  </p>
+<ol>
+<li><a href="https://wiki.ubuntu.com.cn/GRUB%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B" target="_blank" rel="external">安装grub，制作启动盘</a>  </li>
+<li><a href="http://www.nenew.net/ubuntu-grub-cfg.html" target="_blank" rel="external">Ubuntu的启动配置文件grub.cfg（menu.lst）设置指南</a>  </li>
+<li><a href="http://183530300.blog.51cto.com/894387/1853816" target="_blank" rel="external">linux制作grub.conf文件，启动系统</a>  </li>
+<li><a href="http://www.178linux.com/75355" target="_blank" rel="external">删除挂载在逻辑卷的根下的/etc/fstab配置文件以及/boot/目录下的文件</a>  </li>
+</ol>
+<h2 id="开机自启服务程序编写"><a href="#开机自启服务程序编写" class="headerlink" title="开机自启服务程序编写"></a>开机自启服务程序编写</h2><table>
+<thead>
+<tr>
+<th>Run level</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Halt</td>
+<td>关机时进入</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Single-user mode</td>
+<td>超级用户模式，在系统启动出出错、文件系统出错等情况下进入</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Multi-User Mode(without networking)</td>
+<td>多用户模式，如果你没有网络接口可以配置进入此模式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Multi-User Mode</td>
+<td>多用户模式，我的服务器默认为此运行级别</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Not used/user definable</td>
+<td>保留，用户也可以使用该运行级别来自定义自己的需求</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GUI mode</td>
+<td>图形界面模式</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Reboot</td>
+<td>重启时进入</td>
+</tr>
+<tr>
+<td>s or S</td>
+<td>Single-user/Maintenance mode    特殊用途</td>
+</tr>
+</tbody>
+</table>
+<p>将一个编好的服务程序（作为守护进程存在，提供服务，比如nginx/sshd），作为固定服务加入系统中的话，在sysvinit中这样做就好了：</p>
+<p>将服务脚本置于/etc/init.d/中。<br>在相关运行级别创建启动软连接，例如，开机自启的话，在/etc/rc2.d/、/etc/rc3.d/、/etc/rc5.d/中创建启动服务脚本的软连接(命名S开头)。<br>(optional)如果有需要的话，在相关运行级别创建停止服务软连接。<br>举例来说，假设是你编写了一个nginx的服务，现在要将其添加进系统启动服务中：</p>
+<p>将服务程序置于/etc/init.d/nginx<br>在/etc/rc2.d/、/etc/rc3.d/、/etc/rc5.d/中创建启动软连接：</p>
+<pre><code># ln -s /etc/init.d/nginx /etc/rc2.d/S20nginx  
+# ln -s /etc/init.d/nginx /etc/rc3.d/S20nginx  
+# ln -s /etc/init.d/nginx /etc/rc5.d/S20nginx  
+</code></pre><p>在/etc/rc0.d/，/etc/rc1.d/，/etc/rc6.d/中，创建停止服务软连接：</p>
+<pre><code># ln -s /etc/init.d/nginx /etc/rc0.d/K20nginx  
+# ln -s /etc/init.d/nginx /etc/rc1.d/K20nginx  
+# ln -s /etc/init.d/nginx /etc/rc6.d/K20nginx  
+</code></pre><p>这样，当系统启动的时候，就会启动nginx，而关机、重启的时候，会stop nginx。</p>
+<h2 id="service-命令理解"><a href="#service-命令理解" class="headerlink" title="service 命令理解"></a>service 命令理解</h2><p>这里介绍一下我们常用的service命令到底怎么回事。</p>
+<p>语法：</p>
+<pre><code>service SCRIPT COMMAND [OPTIONS]
+</code></pre><p>这个命令的作用是： 运行一个sysvinit 程序或Upstart作业！，所以其是一个既支持Upstart作业，又支持sysvinit程序的命令。运行时，service首先从/etc/init.d/中去找SCRIPT，如果没找着再去/etc/init/目录下去找同名作业配置文件。然后运行这些程序/作业。</p>
+<p>需要注意的是，service命令和/etc/rcN.d/这个目录没有任何关系。</p>
+<p>例子：</p>
+<pre><code>service nginx start # 启动nginx服务
+service nginx stop  # 停止nginx服务
+service nginx restart # 重启nginx服务
+</code></pre><p>在运行时，COMMAND 和 OPTTIONS都会被完整的传递给SCRIPT。故service nginx start其实最终执行的命令是/etc/init.d/nginx start，”start”这个操作，并不是由service来完成，service仅仅是起到一个寻找脚本位置的作用而已！</p>
+<p>参考网址：  </p>
+<ol>
+<li><a href="http://monklof.com/post/14/" target="_blank" rel="external">linux System V init、upstart启动方式讲解</a>  </li>
+</ol>
+
+					</div>
+
+			  <!-- about -->
+			  
+		</div>
+
+		<!-- pagination -->
+	  
+
+		<div class="comment-section">
+  
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+
+
+</div>
+	</div>
+
+	
+
+</div>
+
+
+		<footer>
+			
+
+<p>
+  由 <a href="https://hexo.io">hexo</a> 强力驱动 | 搭载 <a href="https://github.com/wayou/hexo-theme-material">material</a> 主题
+</p>
+<p>
+  &copy; 2017 <a href="https://liliechao.github.io"> liliechao </a>
+</p>
+<a id="gotop" href="#" title="back to top"><i class="mdi-hardware-keyboard-arrow-up"></i></a>
+
+		</footer>
+	  </div>
+
+		<!-- <script src="/libs/bs/js/bootstrap.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script>(typeof $().modal == 'function')|| document.write('<script src="/libs/bs/js/bootstrap.min.js" type="text/javascript"><\/script>')</script>
+
+		<!-- material design -->
+		<!-- <script src="/libs/bs-material/js/ripples.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/ripples.min.js"></script>
+		<!-- <script src="/libs/bs-material/js/material.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/material.min.js"></script>
+		<!-- toc -->
+		<!-- <script src="/libs/tocify/jquery-ui.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="/libs/tocify/jquery.tocify.custom.js"></script>
+
+		<script src="/js/main.js"></script>
+
+	</body>
+</html>

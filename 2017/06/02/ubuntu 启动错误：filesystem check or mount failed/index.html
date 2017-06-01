@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>7. Reverse Integer | liliechao&#39;s Blog</title>
+  <title>ubuntu 启动错误：filesystem check or mount failed. | liliechao&#39;s Blog</title>
   <meta name="author" content="liliechao">
   
   <meta name="description" content="liliechao&#39;s Blog">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="7. Reverse Integer"/>
+  <meta property="og:title" content="ubuntu 启动错误：filesystem check or mount failed."/>
   <meta property="og:site_name" content="liliechao&#39;s Blog"/>
 
   
@@ -115,22 +115,59 @@
 			<!-- index -->
 		   
 
-			  		<h2>7. Reverse Integer</h2>
+			  		<h2>ubuntu 启动错误：filesystem check or mount failed.</h2>
 					
 					<div>
-						<span class="post-time">2017-05-27 14:03:09</span>
+						<span class="post-time">2017-06-02 02:58:23</span>
 					</div>	
 					
 
 					<div class="article-content">
-						<p>本文给出了Leetcode第7题的代码.<br><a id="more"></a></p>
-<h2 id="Reverse-Integer"><a href="#Reverse-Integer" class="headerlink" title="Reverse Integer"></a>Reverse Integer</h2><blockquote>
-<p>Reverse digits of an integer.</p>
-<p>Example1: x = 123, return 321 Example2: x = -123, return -321</p>
-<p>click to show spoilers.</p>
-<p>Note: The input is assumed to be a 32-bit signed integer. Your<br>function should return 0 when the reversed integer overflows.</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">long</span> res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> remainder = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(x != <span class="number">0</span>)&#123;</div><div class="line">            remainder = x%<span class="number">10</span>;</div><div class="line">            res = <span class="number">10</span>*res + remainder;</div><div class="line">            x /= <span class="number">10</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(Math.abs(res) &gt; (<span class="number">1</span>&lt;&lt;<span class="number">31</span>) -<span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>)res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+						<p>本文分析了ubuntu 启动错误：filesystem check or mount failed.并试着解决此错误。<br><a id="more"></a></p>
+<h2 id="ubuntu-启动错误：filesystem-check-or-mount-failed"><a href="#ubuntu-启动错误：filesystem-check-or-mount-failed" class="headerlink" title="ubuntu 启动错误：filesystem check or mount failed."></a>ubuntu 启动错误：filesystem check or mount failed.</h2><p>根据提示，错误原因应该是文件系统检查失败或者挂载失败。</p>
+<p>参考网页 1 解决思路是重新挂载根目录。</p>
+<pre><code>mount -o remount,rw /
+dpkg --configure -a
+mount -o remount,ro /
+sync
+reboot
+</code></pre><p>参考网页 2、3 解决思路是检查、修复文件系统。</p>
+<pre><code>#fsck -f -c  
+#fsck.ext4 -f /dev/sda2  
+</code></pre><p>上面两种方法自己都试过了，无效。</p>
+<p>参考网页 4 中出现问题的原因为 /etc/fstab 文件中UUID信息与 blkid 获得信息不一致。</p>
+<p>参考网页 5 中问题未解决。自己仔细看过论坛记录后也没发现是什么问题。</p>
+<p>参考网页 6 也没解决问题。但是建议：</p>
+<pre><code>Have a look at /var/log/dmesg, /var/log/boot.log and see if its having problems with mounting, rather than corruption.
+</code></pre><p>参考网页 7 问题得到解决。提到了2种解决方法。<br>第1种是 running GParted from the Ubuntu live cd to check filesystem。<br>第2种：</p>
+<pre><code>The /dev/sda2 and /dev/sda5 were being mounted in the wrong place. 
+Instead of being mounted in /home and /boot as per /etc/fstab, they were being mounted in new directories in /media  
+called /media/usbhd-sda2 and /media/usbhd-sda5. Upon deleting those folders, everything has gone back to normal.  
+I have no idea how those new folders got created...but problem solved now.  
+</code></pre><p>有人解释了上面问题产生的原因:  </p>
+<pre><code>The problem in udev that do automount to filesystems that he find.
+The config laying in /etc/udev/rules.d &lt;--- there is some file with extention *.rules
+The first string in the file is &quot;KERNEL!=&quot;sd[a-z][0-9]&quot;, GOTO=&quot;media_by_label_auto_mount_end&quot;
+Mostly main fs mounted from device /dev/sda... to make udev ignore /dev/sda just change the string to:
+&quot;KERNEL!=&quot;sd[b-z][0-9]&quot;, GOTO=&quot;media_by_label_auto_mount_end
+If you have more that two physical hdds sdb\sdc\sdd make the changes in config.
+That help me to solve the same problem that samson had.
+</code></pre><p>这个错误其他可能的原因：</p>
+<ol>
+<li>磁盘已满  </li>
+<li>non-root file systems的错误。</li>
+</ol>
+<p>参考网页：  </p>
+<ol>
+<li><a href="https://askubuntu.com/questions/361332/ubuntu-13-04-to-13-10-filesystem-check-or-mount-failed" target="_blank" rel="external">Ubuntu 13.04 to 13.10: Filesystem check or mount failed</a>  </li>
+<li><a href="https://askubuntu.com/questions/524574/filesystem-check-or-mount-failed" target="_blank" rel="external">Filesystem check or mount failed</a>  </li>
+<li><a href="http://www.linuxidc.com/Linux/2010-04/25467.htm" target="_blank" rel="external">Ubuntu:mount of filesystem failed解决办法</a></li>
+<li><a href="https://ubuntuforums.org/showthread.php?t=2206111" target="_blank" rel="external">[SOLVED] File System Check or Mount Failed</a>  </li>
+<li><a href="https://www.kubuntuforums.net/showthread.php?t=62603" target="_blank" rel="external">Filesystem check or mount failed. fsck not helping</a>  </li>
+<li><a href="http://www.linuxquestions.org/questions/linux-newbie-8/filesystem-check-or-mount-failed-fsck-not-helping-4175460401/" target="_blank" rel="external">Filesystem check or mount failed. fsck not helping</a>  </li>
+<li><a href="https://bbs.archlinux.org/viewtopic.php?id=89394" target="_blank" rel="external">Filesystem check failed (SOLVED)</a></li>
+</ol>
+
 					</div>
 
 			  <!-- about -->
