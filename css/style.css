@@ -38,14 +38,14 @@ blockquote{
 }
 
 .center-content{
-  float: none;
+  /*float: none;*/
   margin: 0 auto;
 }
 
 /*toc*/
 #toc {
-  position: fixed;
-  right: 30px;
+  /*position: fixed;
+  right: 30px;*/
   top: 150px;
   transition: all ease 0.3s;
   border: none;
@@ -71,6 +71,7 @@ blockquote{
 .tocify-item.tocify-focus{
   color: teal;
   border-left: 2px solid;
+  background-color: #CFCFCF;
   font-weight: bold;
 }
 
@@ -174,4 +175,8 @@ footer {
   margin-right: 15px;
   position: relative;
   left: 15px;
+}
+
+.navi-center{
+  text-align: center;
 }
