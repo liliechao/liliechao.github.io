@@ -15,9 +15,9 @@
   <meta property="og:site_name" content="liliechao&#39;s Blog"/>
 
   
-  
+  <!--  -->
 		<!-- favicon -->
-		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+		<!-- <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
@@ -31,10 +31,12 @@
 		<link rel="manifest" href="/manifest.json">
 		<meta name="msapplication-TileColor" content="#009688">
 		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
-		<meta name="theme-color" content="#009688">
+		<meta name="theme-color" content="#009688"> -->
 		<!-- favicon end -->
     <!-- <link href="/favicon.ico" rel="icon"> -->
-  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <!--  -->
 
   <!-- toc -->
   <link rel="stylesheet" href="/libs/tocify/jquery.tocify.css" media="screen" type="text/css">
@@ -51,6 +53,8 @@
   <link rel="stylesheet" href="/css/highlight.light.css" media="screen" type="text/css">
 
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
 
   
 
@@ -116,11 +120,44 @@
 		   
 
 			  		<h2>ubuntu启动过程</h2>
-					
-					<div>
-						<span class="post-time">2017-06-01 16:33:11</span>
-					</div>	
-					
+					<!--  -->
+					<div class="row widget-wrapper">
+						<!-- <span class="post-time">2017-06-01 16:33:11</span> -->
+						<!-- date -->
+						
+						<div class="post-meta-item">
+							<i class="fa fa-clock-o"></i>
+							<span class="post-time">2017-06-01 16:33:11</span>
+						</div>
+						
+
+						<!-- author -->
+						<!-- 
+						<div class="post-meta-item">
+							<i class="fa fa-user" title="作者"></i>
+							<span >liliechao</span>
+						</div>
+						 -->
+
+						<!-- categories -->
+					    
+						<div class="post-meta-item">
+							<i class="fa fa-folder"></i>
+							
+							<a class="label label-success" href="/categories/linux/">linux</a>
+						</div>
+						
+
+						<!-- tags -->
+						
+						<div class="post-meta-item">
+							<i class="fa fa-tags"></i>
+							
+							<a class="label label-warning" href="/tags/ubuntu/">ubuntu</a>
+						</div>
+						
+					</div>
+					<!--  -->
 
 					<div class="article-content">
 						<p>本文讲述了从按下开机按钮到ubuntu（14.04 LTS）启动完毕的过程。grub 入门知识和设置进程开机启动方法。<br><a id="more"></a></p>
@@ -222,13 +259,14 @@ S18acpid -&gt; ../init.d/acpid
 <p>start on EVENT： 在EVENT发生的时候启动该作业<br>stop on EVENT： 在EVENT发生的时候停止改作业<br>script … end script： 作业运行主程序脚本内容<br>所以根据以上配置，Upstart兼容sysvinit的过程是这样的：</p>
 <p>作业rc-sysinit在收到 “(filesystem and static-network-up) or failsafe-boot” 的信号之后由Upstart启动。一切正常的话，rc-sysinit通过telinit完成运行级别信号的发送。<br>作业rc在收到运行级别信号之后，由Upstart启动。然后rc通过运行/etc/init.d/rc $RUNLEVEL这个命令， 来完成/etc/rcN.d/下相应程序的启动。<br>这样，就完成了兼容sysvinit的过程。</p>
 <p>所以，在Upstart之下，你可以有2种方式添加系统服务程序：<br>按照System V 规则编写服务，并置于相应位置。<br>编写Upstart作业配置文件，置于 /etc/init/ 目录之下。</p>
-<p>Upstart 流程：<br><img src="https://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/image004.png" alt=""></p>
+<p>参考网页 4 讲的很好。<br>Upstart 流程：<br><img src="https://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/image004.png" alt=""></p>
 <p>参考网址：  </p>
 <ol>
 <li><a href="http://monklof.com/post/14/" target="_blank" rel="external">linux System V init、upstart启动方式讲解</a>  </li>
 <li><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html" target="_blank" rel="external">Debian System V启动方式讲解</a>  </li>
 <li><a href="http://www.178linux.com/75355" target="_blank" rel="external">CetnOS6启动流程以及LVM下的fstab及boot恢复实验</a>  </li>
 <li><a href="https://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/" target="_blank" rel="external">浅析 Linux 初始化 init 系统，第 2 部分: UpStart</a>  </li>
+<li><a href="http://upstart.ubuntu.com/cookbook/#expect" target="_blank" rel="external">Upstart Intro, Cookbook and Best Practises</a></li>
 </ol>
 <h3 id="systemd-启动方式"><a href="#systemd-启动方式" class="headerlink" title="systemd 启动方式"></a>systemd 启动方式</h3><p>怎么查看系统使用 init 还是 systemd 方式启动的？<br><img src="https://dn-linuxcn.qbox.me/data/attachment/album/201605/19/220710s7dekedg5y5odeys.png?_=5564751" alt="">  </p>
 <p>2014 年 2 月 14 日，Mark Shuttleworth（Canonical Ltd. 创建者）发布声明之后的 Ubuntu 发行版采用 systemd 作为默认初始化守护进程。</p>
@@ -254,11 +292,11 @@ S18acpid -&gt; ../init.d/acpid
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mkdir /root/boot &amp;&amp; mv /boot/* /root/boot        #将boot下的所有文件移动到家目录下的boot中（boot需要创建）</div><div class="line">sync*3                                #同步数据到磁盘</div><div class="line">reboot                                #重启</div><div class="line"></div><div class="line">进入救援模式</div><div class="line">df                                    #查看挂载，发现并没有被挂载!</div></pre></td></tr></table></figure>
 <p><img src="http://i.imgur.com/RMtLBfO.png" alt=""></p>
 <pre><code class="shell">ls /dev/mapper    &amp;&amp;                    #mapper是所有LVM存放的地方，我们可以查看有没有逻辑卷存在
-   lvdisplay                        lvdisplay命令查看LVM状态，发现都是不可用状态，并且很用容易看出根目录在哪个逻辑卷中
-       vgchage -ay                         g，也就是激活逻辑卷
+lvdisplay                        #使用lvdisplay命令查看LVM状态，发现都是不可用状态，并且很用容易看出根目录在哪个逻辑卷中
+vgchage -ay                   #激活vg，也就是激活逻辑卷
 lvdisplay                            #再次确认LVM状态
 ls /dev/mapper                        #查看LVM设备
-   mount /dev/mapper/VolGroup-lv_root /mnt/sysimage        #根据查看到的信息将根挂载到/mnt/image（sysimage可以是其他挂载点）下 cd /mnt/sysimage                    #切换到操作系统根目录下
+mount /dev/mapper/VolGroup-lv_root /mnt/sysimage        #根据查看到的信息将根挂载到/mnt/image（sysimage可以是其他挂载点）下 cd /mnt/sysimage                    #切换到操作系统根目录下
 ls                                    #查看是否是操作系统根目录
 vi etc/fstab                    #在当前目录下的etc下创建fstab文件，注意是当前目录而不是/
     :r! ls /dev/mapper        #在末行模式下使用r！读取出LVM的名字
@@ -280,15 +318,18 @@ grub-install /dev/sda    #修复grub
 kernel /vmlinuz-2(tab补全) root=/dev/mapper/VoGroup-lv_root selinux=0
 initrd /init(tab补全)
 boot    #启动
-<span class="meta">#</span>注意，修复grub.conf文件时临时有效，如果想永久修复需要重新编辑/boot/grub/grub.conf
+    #注意，修复grub.conf文件时临时有效，如果想永久修复需要重新编辑/boot/grub/grub.conf
     default=0
     timeout=5
     title CentOS68
-        kernel (hd0,0)/vmlinuz-.... ro root=/dev/vg0/root 
-        initrd /initramfs-...img
+    kernel (hd0,0)/vmlinuz-.... ro root=/dev/vg0/root 
+    initrd /initramfs-...img
 </code></pre>
 <p>参考网址：  </p>
 <ol>
+<li><a href="http://zz6547.blog.51cto.com/2571551/1852788" target="_blank" rel="external">Grub.conf 配置文件的解释</a>  </li>
+<li><a href="http://www.jinbuguo.com/linux/grub.cfg.html" target="_blank" rel="external">Ubuntu GRUB2配置文件”grub.cfg”详解(GRUB2实战手册)</a>  </li>
+<li><a href="https://www.tianmaying.com/tutorial/grub-rescue" target="_blank" rel="external">Grub 命令行配置启动参数</a>  </li>
 <li><a href="https://wiki.ubuntu.com.cn/GRUB%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B" target="_blank" rel="external">安装grub，制作启动盘</a>  </li>
 <li><a href="http://www.nenew.net/ubuntu-grub-cfg.html" target="_blank" rel="external">Ubuntu的启动配置文件grub.cfg（menu.lst）设置指南</a>  </li>
 <li><a href="http://183530300.blog.51cto.com/894387/1853816" target="_blank" rel="external">linux制作grub.conf文件，启动系统</a>  </li>
@@ -392,9 +433,21 @@ service nginx restart # 重启nginx服务
 	</div>
 
 	
+		<div class="col-md-3">
+			<div id="toc" >
+				<div class="toc-title">目录</div>
+			</div>
+			<!-- <div id="sidebar">
+		</div>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#计算机启动"><span class="toc-text">计算机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作系统的启动"><span class="toc-text">操作系统的启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#System-V-init-启动方式"><span class="toc-text">System V init 启动方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#upstart-启动方式"><span class="toc-text">upstart 启动方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#systemd-启动方式"><span class="toc-text">systemd 启动方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grub-入门"><span class="toc-text">grub 入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验"><span class="toc-text">实验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开机自启服务程序编写"><span class="toc-text">开机自启服务程序编写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#service-命令理解"><span class="toc-text">service 命令理解</span></a></li></ol> -->
+			<!-- <div id="toc" >
+				<div class="toc-title">目录</div>
+				<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#计算机启动"><span class="toc-text">计算机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作系统的启动"><span class="toc-text">操作系统的启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#System-V-init-启动方式"><span class="toc-text">System V init 启动方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#upstart-启动方式"><span class="toc-text">upstart 启动方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#systemd-启动方式"><span class="toc-text">systemd 启动方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grub-入门"><span class="toc-text">grub 入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验"><span class="toc-text">实验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开机自启服务程序编写"><span class="toc-text">开机自启服务程序编写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#service-命令理解"><span class="toc-text">service 命令理解</span></a></li></ol>
+			</div> -->
+		</div>
+	
 
 </div>
-
 
 		<footer>
 			
@@ -421,10 +474,9 @@ service nginx restart # 重启nginx服务
 		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/material.min.js"></script>
 		<!-- toc -->
 		<!-- <script src="/libs/tocify/jquery-ui.min.js"></script> -->
+
 		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 		<script src="/libs/tocify/jquery.tocify.custom.js"></script>
-
 		<script src="/js/main.js"></script>
-
 	</body>
 </html>

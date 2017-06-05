@@ -15,9 +15,9 @@
   <meta property="og:site_name" content="liliechao&#39;s Blog"/>
 
   
-  
+  <!--  -->
 		<!-- favicon -->
-		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+		<!-- <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
 		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
@@ -31,10 +31,12 @@
 		<link rel="manifest" href="/manifest.json">
 		<meta name="msapplication-TileColor" content="#009688">
 		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
-		<meta name="theme-color" content="#009688">
+		<meta name="theme-color" content="#009688"> -->
 		<!-- favicon end -->
     <!-- <link href="/favicon.ico" rel="icon"> -->
-  
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <!--  -->
 
   <!-- toc -->
   <link rel="stylesheet" href="/libs/tocify/jquery.tocify.css" media="screen" type="text/css">
@@ -51,6 +53,8 @@
   <link rel="stylesheet" href="/css/highlight.light.css" media="screen" type="text/css">
 
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
 
   
 
@@ -116,16 +120,56 @@
 		   
 
 			  		<h2>ubuntu 启动错误：filesystem check or mount failed.</h2>
-					
-					<div>
-						<span class="post-time">2017-06-02 02:58:23</span>
-					</div>	
-					
+					<!--  -->
+					<div class="row widget-wrapper">
+						<!-- <span class="post-time">2017-06-02 02:58:23</span> -->
+						<!-- date -->
+						
+						<div class="post-meta-item">
+							<i class="fa fa-clock-o"></i>
+							<span class="post-time">2017-06-02 02:58:23</span>
+						</div>
+						
+
+						<!-- author -->
+						<!-- 
+						<div class="post-meta-item">
+							<i class="fa fa-user" title="作者"></i>
+							<span >liliechao</span>
+						</div>
+						 -->
+
+						<!-- categories -->
+					    
+						<div class="post-meta-item">
+							<i class="fa fa-folder"></i>
+							
+							<a class="label label-success" href="/categories/linux/">linux</a>
+						</div>
+						
+
+						<!-- tags -->
+						
+						<div class="post-meta-item">
+							<i class="fa fa-tags"></i>
+							
+							<a class="label label-warning" href="/tags/ubuntu/">ubuntu</a>
+						</div>
+						
+					</div>
+					<!--  -->
 
 					<div class="article-content">
 						<p>本文分析了ubuntu 启动错误：filesystem check or mount failed.并试着解决此错误。<br><a id="more"></a></p>
-<h2 id="ubuntu-启动错误：filesystem-check-or-mount-failed"><a href="#ubuntu-启动错误：filesystem-check-or-mount-failed" class="headerlink" title="ubuntu 启动错误：filesystem check or mount failed."></a>ubuntu 启动错误：filesystem check or mount failed.</h2><p>根据提示，错误原因应该是文件系统检查失败或者挂载失败。</p>
-<p>参考网页 1 解决思路是重新挂载根目录。</p>
+<h2 id="ubuntu-启动错误：filesystem-check-or-mount-failed"><a href="#ubuntu-启动错误：filesystem-check-or-mount-failed" class="headerlink" title="ubuntu 启动错误：filesystem check or mount failed."></a>ubuntu 启动错误：filesystem check or mount failed.</h2><p>硬件环境： Dell 服务器 PowerEdge R720<br>操作系统： ubuntu 14.04 LTS  </p>
+<p>根据提示，错误原因应该是文件系统检查失败或者挂载失败。</p>
+<p>错误提示：  </p>
+<pre><code>Filesystem check or mount failed.   
+A maintenance shell will now be started. CONTROL-D will terminate this shell and continue booting  
+after re-trying filesystems. Any further errors will be ignored.  
+Give root password for maintenance  
+(or type ctrl-D to continue)  
+</code></pre><p>参考网页 1 解决思路是重新挂载根目录。</p>
 <pre><code>mount -o remount,rw /
 dpkg --configure -a
 mount -o remount,ro /
@@ -135,7 +179,7 @@ reboot
 <pre><code>#fsck -f -c  
 #fsck.ext4 -f /dev/sda2  
 </code></pre><p>上面两种方法自己都试过了，无效。</p>
-<p>参考网页 4 中出现问题的原因为 /etc/fstab 文件中UUID信息与 blkid 获得信息不一致。</p>
+<p>参考网页 4 中出现问题的原因为 <code>/etc/fstab</code> 文件中UUID信息与 blkid 获得信息不一致。</p>
 <p>参考网页 5 中问题未解决。自己仔细看过论坛记录后也没发现是什么问题。</p>
 <p>参考网页 6 也没解决问题。但是建议：</p>
 <pre><code>Have a look at /var/log/dmesg, /var/log/boot.log and see if its having problems with mounting, rather than corruption.
@@ -165,7 +209,76 @@ That help me to solve the same problem that samson had.
 <li><a href="https://ubuntuforums.org/showthread.php?t=2206111" target="_blank" rel="external">[SOLVED] File System Check or Mount Failed</a>  </li>
 <li><a href="https://www.kubuntuforums.net/showthread.php?t=62603" target="_blank" rel="external">Filesystem check or mount failed. fsck not helping</a>  </li>
 <li><a href="http://www.linuxquestions.org/questions/linux-newbie-8/filesystem-check-or-mount-failed-fsck-not-helping-4175460401/" target="_blank" rel="external">Filesystem check or mount failed. fsck not helping</a>  </li>
-<li><a href="https://bbs.archlinux.org/viewtopic.php?id=89394" target="_blank" rel="external">Filesystem check failed (SOLVED)</a></li>
+<li><a href="https://bbs.archlinux.org/viewtopic.php?id=89394" target="_blank" rel="external">Filesystem check failed (SOLVED)</a>  </li>
+</ol>
+<h2 id="自己的解决方法"><a href="#自己的解决方法" class="headerlink" title="自己的解决方法"></a>自己的解决方法</h2><h3 id="进展-1"><a href="#进展-1" class="headerlink" title="进展 1"></a>进展 1</h3><p>我按了 <code>ctrl-D</code> 之后，出现如下信息：  </p>
+<pre><code>mountall start/starting
+Filesystem check or mount failed.   
+A maintenance shell will now be started. CONTROL-D will terminate this shell and continue booting  
+after re-trying filesystems. Any further errors will be ignored.  
+Give root password for maintenance  
+(or type ctrl-D to continue)  
+</code></pre><p>注意到错误信息第一行多了一句 <code>mountall start/starting</code>  </p>
+<p>那么，可以从启动日志 <code>/var/log/dmeg</code> 中查看挂载情况:  </p>
+<pre><code>cat /var/log/dmeg | grep mountall  
+</code></pre><p>得到结果如下：  </p>
+<pre><code>root@stackcontroller:/home/ubuntu# cat /var/log/dmesg |grep mountall
+[    8.153842] init: mountall main process (293) terminated with status 2
+[  262.179491] init: mountall main process (322) terminated with status 2
+</code></pre><p>从启动日志 <code>/var/log/dmeg</code> 中查看硬盘情况:  </p>
+<pre><code>cat /var/log/dmeg | grep sda
+</code></pre><p>得到结果如下：</p>
+<pre><code>root@stackcontroller:/home/ubuntu# cat /var/log/dmesg |grep sda
+[    2.573476] sd 0:0:0:0: [sda] 1953525168 512-byte logical blocks: (1.00 TB/931 GiB)
+[    2.573479] sd 0:0:0:0: [sda] 4096-byte physical blocks
+[    2.573546] sd 0:0:0:0: [sda] Write Protect is off
+[    2.573550] sd 0:0:0:0: [sda] Mode Sense: 00 3a 00 00
+[    2.573573] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn&apos;t support DPO or FUA
+[    2.616699]  sda: sda1 sda2 sda3
+[    2.617036] sd 0:0:0:0: [sda] Attached SCSI disk
+[    3.599357] EXT4-fs (sda2): mounted filesystem with ordered data mode. Opts: (null)
+[  430.011487] Adding 8340476k swap on /dev/sda3.  Priority:-1 extents:1 across:8340476k FS
+[  432.501675] EXT4-fs (sda2): re-mounted. Opts: errors=remount-ro
+</code></pre><p>仔细查看日志 /var/log/dmesg ，与正常启动的服务器的日志对比。  </p>
+<pre><code>[    8.153842] init: mountall main process (293) terminated with status 2  
+</code></pre><p>在这一行前面，日志都是一样的，突然出现了这个信息。</p>
+<p>既然 <code>ctrl-D</code> 的 mountall 不行，那么试着登陆 maintenance shell ，root 执行 mountall ，得到如下结果：<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/filesystemfailed/IMG_20170602_220053.jpg-blog3" alt="">  </p>
+<p>这时系统已经可以远程登录了，或者按 <code>Ctrl + alt + F2</code> 开启另一个控制台登录。说明系统可以启动了，这样可以猜出问题出在文件系统的挂载上。</p>
+<h3 id="进展-2"><a href="#进展-2" class="headerlink" title="进展 2"></a>进展 2</h3><p>于是接下来修改google 关键词为： <code>&quot;mountall start/starting&quot; Filesystem check or mount failed</code> . 重新检索。</p>
+<p>下面参考网页 1 中方法进入 recovery 后只有一个选项，与描述不符。</p>
+<p>下面参考网页 2 中方法自己试过了，无效。</p>
+<pre><code>Managed to FSCK it enough to run:
+&apos;mount -o rw,remount /&apos;
+Followed by:
+&apos;sudo mountall&apos;
+Which allowed me to load Ubuntu 13.10 (but pretty badly damaged).
+Then summoned a Terminal window (Ctrl-Alt-T) and ran:
+&apos;sudo dpkg --configure -a&apos; 
+which fixed the broken install, then ran:
+&apos;sudo apt-get install -f&apos; 
+which fixed the broken packages.
+</code></pre><p>自己尝试过在单用户模式下 fsck 修复文件系统，重启后无效。</p>
+<h3 id="进展-3"><a href="#进展-3" class="headerlink" title="进展 3"></a>进展 3</h3><p>自己也猜测是 swap 分区的问题，这个分区不能挂载。<a href="https://linuxaria.com/pills/review-and-repair-a-linux-swap-partition" target="_blank" rel="external">重新修复</a>了 swap 分区，结果还是不行。</p>
+<p>计划：<a href="http://www.cnblogs.com/jiuyueguang/p/3176629.html" target="_blank" rel="external">打开 <code>/var/log/messages</code> 日志</a>，查看更详细日志。<br>打开后，重启，没有内容。</p>
+<h3 id="进展-4"><a href="#进展-4" class="headerlink" title="进展 4"></a>进展 4</h3><p>在上面的尝试都无效之后，只能自己分析问题所在了。<br>猜测由于 /sbin/init 进程发出 startup 时间之后，启动 mountall 工作。但是 mountall 工作由于某种原因终止了。</p>
+<p>根据如下 <code>df -h</code> 的提示信息，猜测是由于 swap 分区出现问题。<br><img src="" alt=""></p>
+<p>mountall其实分为很多步骤。仔细执行其中各个步骤，看卡在哪一个地方了。<br>但是，自己试过了 <code>mount /dev/sda2</code> , <code>swapon -f /dev/sda3</code> 都不行。<br>看来这种思路行不通。  </p>
+<p>执行 <code>initctl status</code> 发现只有 <code>mountall-shell</code> 在运行。<br>查看 /etc/init/mountall-shell.conf 内容，根据错误提示，判断其运行原因是 mountall exit status 2 。<br>看来要解决问题还是要弄清楚 mountall 退出的原因。  </p>
+<p>根据 mountall.conf 内容，自己在根目录下创建了 forcefsck 文件，修改了 /etc/default/rcS 中 FSCKFIX=yes 。<br>重启后还是不行。  </p>
+<p>mmp，真难搞定。  </p>
+<h3 id="进展-5"><a href="#进展-5" class="headerlink" title="进展 5"></a>进展 5</h3><p><a href="https://github.com/hokein/Wiki/wiki/ubuntu%E8%8E%B7%E5%8F%96%E6%BA%90%E7%A0%81%E6%96%B9%E6%B3%95" target="_blank" rel="external">下载了 mountall 源码</a>，查看源码，没什么突破。  </p>
+<p>按照下面网页上更新内核之后，重启还是相同错误，但是出现这个错误之后就卡着不动了。按 ctrl + D 没反应，也进不了 maintenance shell 。  只能强制关机，问题越来越严重了。。。<br><a href="https://forum.linode.com/viewtopic.php?p=28115" target="_blank" rel="external">https://forum.linode.com/viewtopic.php?p=28115</a></p>
+<p>哎，放弃了，弄不好。</p>
+<p>参考网页：  </p>
+<ol>
+<li><a href="https://askubuntu.com/questions/822057/filesystem-check-or-mount-failed-error-how-to-fix-without-harming-windows" target="_blank" rel="external">“Filesystem check or mount failed” error.</a>  </li>
+<li><a href="http://www.linuxquestions.org/questions/linux-desktop-74/ubuntu-13-10-update-crashed-out-on-dell-inspiron-15r-won%27t-boot-into-shell%85-4175486387/" target="_blank" rel="external">Ubuntu 13.10 update crashed out (on Dell Inspiron 15r), won’t boot into shell…</a>  </li>
+</ol>
+<p>附件浏览：  </p>
+<ol>
+<li><a href="http://oqz36ha1t.bkt.clouddn.com/blog/filesystemfailed/199information.txt" target="_blank" rel="external">服务器磁盘分区、挂载信息、fstab 信息查看</a>  </li>
+<li><a href="http://oqz36ha1t.bkt.clouddn.com/blog/filesystemfailed/log/dmesg.log" target="_blank" rel="external">/var/log/dmesg 日志</a>  </li>
+<li><a href="http://oqz36ha1t.bkt.clouddn.com/blog/filesystemfailed/log/boot.log" target="_blank" rel="external">/var/log/boot.log 日志</a>  </li>
 </ol>
 
 					</div>
@@ -190,9 +303,21 @@ That help me to solve the same problem that samson had.
 	</div>
 
 	
+		<div class="col-md-3">
+			<div id="toc" >
+				<div class="toc-title">目录</div>
+			</div>
+			<!-- <div id="sidebar">
+		</div>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ubuntu-启动错误：filesystem-check-or-mount-failed"><span class="toc-text">ubuntu 启动错误：filesystem check or mount failed.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自己的解决方法"><span class="toc-text">自己的解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-1"><span class="toc-text">进展 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-2"><span class="toc-text">进展 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-3"><span class="toc-text">进展 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-4"><span class="toc-text">进展 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-5"><span class="toc-text">进展 5</span></a></li></ol></li></ol> -->
+			<!-- <div id="toc" >
+				<div class="toc-title">目录</div>
+				<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ubuntu-启动错误：filesystem-check-or-mount-failed"><span class="toc-text">ubuntu 启动错误：filesystem check or mount failed.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自己的解决方法"><span class="toc-text">自己的解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-1"><span class="toc-text">进展 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-2"><span class="toc-text">进展 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-3"><span class="toc-text">进展 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-4"><span class="toc-text">进展 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进展-5"><span class="toc-text">进展 5</span></a></li></ol></li></ol>
+			</div> -->
+		</div>
+	
 
 </div>
-
 
 		<footer>
 			
@@ -219,10 +344,9 @@ That help me to solve the same problem that samson had.
 		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/material.min.js"></script>
 		<!-- toc -->
 		<!-- <script src="/libs/tocify/jquery-ui.min.js"></script> -->
+
 		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 		<script src="/libs/tocify/jquery.tocify.custom.js"></script>
-
 		<script src="/js/main.js"></script>
-
 	</body>
 </html>
