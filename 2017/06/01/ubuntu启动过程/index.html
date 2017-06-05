@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ubuntu启动过程 | liliechao&#39;s Blog</title>
+  <title>ubuntu启动过程 | Liechao&#39;s HomePage</title>
   <meta name="author" content="liliechao">
   
-  <meta name="description" content="liliechao&#39;s Blog">
+  <meta name="description" content="本文讲述了从按下开机按钮到ubuntu（14.04 LTS）启动完毕的过程。grub 入门知识和设置进程开机启动方法。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <meta property="og:title" content="ubuntu启动过程"/>
-  <meta property="og:site_name" content="liliechao&#39;s Blog"/>
+  <meta property="og:site_name" content="Liechao&#39;s HomePage"/>
 
   
   <!--  -->
@@ -33,9 +33,9 @@
 		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
 		<meta name="theme-color" content="#009688"> -->
 		<!-- favicon end -->
-    <!-- <link href="/favicon.ico" rel="icon"> -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <!-- <link href="/favicon.ico" rel="icon"/> -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <!--  -->
 
   <!-- toc -->
@@ -75,7 +75,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">liliechao&#39;s Blog</a>
+            <a class="navbar-brand" href="/">Liechao&#39;s HomePage</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -423,9 +423,28 @@ service nginx restart # 重启nginx服务
 		<div class="comment-section">
   
   
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
+  <div id="disqus_thread"></div>
+  <script>
+      /**
+       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+       */
+      /*
+      var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      */
+      (function() {  // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          
+          s.src = 'https://liliechao.disqus.com/embed.js';
+          
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
   
 
 
