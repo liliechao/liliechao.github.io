@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>带宽与延时知识整理 | Liechao&#39;s HomePage</title>
+  <meta name="author" content="liliechao">
+  
+  <meta name="description" content="一直以来对带宽和时延的计算都迷迷糊糊，今天做了一个简单的整理。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="带宽与延时知识整理"/>
+  <meta property="og:site_name" content="Liechao&#39;s HomePage"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100592085-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Liechao&#39;s HomePage</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> 带宽与延时知识整理</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>一直以来对带宽和时延的计算都迷迷糊糊，今天做了一个简单的整理。<br><a id="more"></a></p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>首先弄清楚几个概念：信号占用带宽、数据传输速率(比特率)、波特率、信道带宽</p>
+<p>信号的误区：0101、0110 等等，这些不是信号（是消息）。信号是实实在在的波形，方波、正弦波等。</p>
+<p>信号占用带宽指的是信号传输速率。</p>
+<p>码元(code)——在使用时间域（或简称为时域）的波形表示数字信号时，代表不同离散数值的基本波形。</p>
+<p>消息的传递整个过程是这样的：<br>如果消息是模拟信号，那么先要采样、量化，变为 0101、0110 这样的抽象消息。<br>将 0101、0110 这样的消息编码为信号。有各种编码方式，归零、不归零等等。这样得到的信号是基频信号。<br>注意：4B/5B 编码是将消息编码为消息，编码后的结果还是 00101、01101 等数据，而不是实实在在的信息。</p>
+<h3 id="带宽"><a href="#带宽" class="headerlink" title="带宽"></a>带宽</h3><p>带宽，又叫频宽，是数据的传输能力，指单位时间内能够<strong>传输</strong>的比特数。高带宽意味着高能力。<br>数字设备中带宽用bps（b/s）表示，即每秒最高可以传输的位数。模拟设备中带宽用Hz表示，即每秒传送的信号周期数。通常描述带宽时省略单位，如10M实质是10M b/s。</p>
+<pre><code>下面解释来自《数据网络技术》ppt 第一章 73 页。
+“带宽”(bandwidth)本来是指信号具有的频带宽度，单位是赫（或千赫、兆赫、吉赫等）。
+现在“带宽”是数字信道所能传送的“最高数据率”的同义语，单位是“比特每秒”，或 b/s (bit/s)。
+</code></pre><h3 id="数据传输速率"><a href="#数据传输速率" class="headerlink" title="数据传输速率"></a>数据传输速率</h3><p>数据传输速率，又称比特率，指每秒钟<strong>实际</strong>传输的比特数，是信息传输速率（传信率）的度量。单位为“比特每秒（bps）”。其计算公式为S=1/T。T为传输1比特数据所花的时间。</p>
+<h3 id="波特率"><a href="#波特率" class="headerlink" title="波特率"></a>波特率</h3><p>在信息传输通道中，携带数据信息的信号单元叫码元，每秒钟通过信道传输的码元数称为码元传输速率，简称波特率。波特率是指数据信号对载波的调制速率，它用单位时间内载波调制状态改变的次数来表示(也就是每秒调制的符号数)，其单位是波特（Baud,symbol/s）。波特率是传输通道频宽的指标。</p>
+<p>比特率=波特率<em>单个调制状态对应的二进制位数（Rb=RB</em>log2 N。其中，N为进制数）</p>
+<h3 id="信道带宽"><a href="#信道带宽" class="headerlink" title="信道带宽"></a>信道带宽</h3><p>信道带宽是指信道支持的最大传输速率，由香农定理决定</p>
+<p>无噪信道带宽：R=B log2(N)<br>有噪信道带宽：Rb＝W*log2(1+S/N)</p>
+<p>参考网页：<br><a href="http://blog.csdn.net/xchbx/article/details/11537951" target="_blank" rel="external">通信常识</a></p>
+<p>一般说的信号带宽指的是，信号占用的带宽，即信号的传输速率。<br>下面图片来自《数据网络技术》ppt 第一章 75 页。<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/bandwidth-delay/transmission-rate.JPG" alt=""></p>
+<p>下面图清晰的说明了信号基频与传输速率的关系，以及信号频率带宽的作用。<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/bandwidth-delay/baseFrequency-rate.JPG" alt=""><br>信号基频决定传输熟虑，信号频率带宽只是决定信号质量而已。</p>
+<p>码元与信元的理解<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/bandwidth-delay/code-signal-element.JPG" alt=""><br>从上图可以看出一个码元指的是一个 0,1 这样的消息。一个信元指的是一个电平。</p>
+<p>如果用 TCP 协议传输，那么传输速率与窗口大小的关系？<br>窗口越大，则传输速率越大。<br>计算公式为： rate = window/RTT<br>注：窗口的大小为字节数。窗口作用是发送 window 个字节后<strong>等待</strong>另一方的应答。<br>参考网页：<a href="http://www.cnblogs.com/hitszxin/archive/2009/08/19/1550086.html" target="_blank" rel="external">这个博客中例题</a><br>这个例题中假设的窗口大小为数据包的个数，不准确，应该是字节数。</p>
+<p>总结：<br>传输速率计算公式已知的有两个，</p>
+<ol>
+<li>基波频率（与采样周期、信号等级有关）</li>
+<li>窗口大小（传输数据量/耗费时间）</li>
+</ol>
+<p>下面这段话说明传输速率取决于调制解调器（采样率）和信达容量（上限）。<br>The communication link considered is viewed as a bit pipe over which a given number<br>of bits per second can be transmitted. This number is called the transmission capacity of<br>the link. It depends on both the physical channel and the interface (e.g., modems), and is<br>simply the rate at which the interface accepts bits.</p>
+<h2 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h2><p>下面图片来自《数据网络技术》ppt 第一章 81 页。<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/bandwidth-delay/delay-calculation.JPG" alt=""></p>
+<p>下面这一段来自于<a href="http://web.mit.edu/dimitrib/www/Queueing_Data_Nets.pdf" target="_blank" rel="external">http://web.mit.edu/dimitrib/www/Queueing_Data_Nets.pdf</a></p>
+<p>In what follows, we will mostly focus on packet delay within the communication<br>subnet (i.e., the network layer). This delay is the sum of delays on each subnet link<br>traversed by the packet. Each link delay in tum consists of four components.</p>
+<ol>
+<li>The processing delay between the time the packet is correctly received at the head<br>node of the link and the time the packet is assigned to an outgoing link queue<br>for transmission. (In some systems, we must add to this delay some additional<br>processing time at the DLC and physical layers.)</li>
+<li>The queueing delay between the time the packet is assigned to a queue for transmission and the time it starts being transmitted. During this time, the packet waits<br>while other packets in the transmission queue are transmitted.</li>
+<li>The transmission delay between the times that the first and last bits of the packet<br>are transmitted.</li>
+<li>The propagation delay between the time the last bit is transmitted at the head<br>node of the link and the time the last bit is received at the tail node. This is<br>proportional to the physical distance between transmitter and receiver; it can be<br>relatively substantial, particularly for a satellite link or a very high speed link.</li>
+</ol>
+<p>按照上面的意思：<br>时延 = 处理时延 + 排队时延 + 发送时延 + 传播时延</p>
+<p>一些网页上提供网络延时计算：<br><a href="http://www.rfwireless-world.com/calculators/Network-Latency-Calculator.html" target="_blank" rel="external">算了发送时延 + 传播时延</a><br><a href="https://www.switch.ch/network/tools/tcp_throughput/" target="_blank" rel="external">算信道最大带宽和交换机缓存大小</a></p>
+<h2 id="QoS"><a href="#QoS" class="headerlink" title="QoS"></a>QoS</h2><p>现有网络控制时延和带宽的方式为：<br>将路由器中正在排队的数据包放在不同的优先级队列中，优先级高的队列，优先发送。<br>这样在传输数据量不变的情况下，耗费时间变了，计算出来的带宽也就变了，同时延时也发生了改变。</p>
+<p>从下面这句话理解：FDM 控制带宽的方式为减少采样频率，TDM 控制带宽的方式为增加等待时间。<br>In time-division (TDM) and frequency-division multiplexing (FDM) with m traffic<br>streams, the link capacity is essentially subdivided into m portions-one per traffic<br>stream. In FOM, the channel bandwidth W is subdivided into m channels each with<br>bandwidth W /m (actually slightly less because of the need for guard bands between<br>channels). The transmission capacity of each channel is roughly C /m, where C is<br>the capacity that would be obtained if the entire bandwidth were allocated to a single<br>channel. The transmission time of a packet that is L bits long is Lm/C, or m times<br>larger than in the corresponding statistical multiplexing scheme. In TOM, allocation is<br>done by dividing the time axis into slots of fixed length (e.g., one bit or one byte long,<br>or perhaps one packet long for fixed length packets). Again, conceptually, we may view<br>the communication link as consisting of m separate links with capacity C /m. In the case<br>where the slots are short relative to packet length, we may again regard the transmission<br>time of a packet L bits long as Lm/C. In the case where the slots are of packet length,<br>the transmission time of an L bit packet is L/C, but there is a wait of (m - 1) packet<br>transmission times between packets of the same stream.</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/06/09/前端知识简单总结/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        <span id="busuanzi_container_page_pv">本文总阅读量<span id="busuanzi_value_page_pv"></span>次.</span>
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div id="disqus_thread">
+  	 <script>
+	    (function() {  // DON'T EDIT BELOW THIS LINE
+	        var d = document, s = d.createElement('script');
+	        
+	        s.src = 'https://liliechao.disqus.com/embed.js';
+	        
+	        s.setAttribute('data-timestamp', +new Date());
+	        (d.head || d.body).appendChild(s);
+	    })();
+	 </script>
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-13 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i>类别</a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/网络/">网络<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i>标签</a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/带宽/">带宽<span>1</span></a></li> <li><a href="/tags/时延/">时延<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i>目录</a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#基础"><span class="toc-article-text">基础</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#带宽"><span class="toc-article-text">带宽</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#数据传输速率"><span class="toc-article-text">数据传输速率</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#波特率"><span class="toc-article-text">波特率</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#信道带宽"><span class="toc-article-text">信道带宽</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#时延"><span class="toc-article-text">时延</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#QoS"><span class="toc-article-text">QoS</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'liliechao';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+  &copy; 2017 liliechao
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+      <span id="busuanzi_container_site_uv"> 本站访客数<span id="busuanzi_value_site_uv"></span>人次</span>.
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'yB7DdN7Wxn6zSD5RGBZ1','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+</body>
+   </html>

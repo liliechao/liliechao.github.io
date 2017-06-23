@@ -135,23 +135,23 @@
 <h3 id="JavaScript-实现"><a href="#JavaScript-实现" class="headerlink" title="JavaScript 实现"></a>JavaScript 实现</h3><p>脚本可位于 HTML 的 <code>&lt;body&gt;</code> 或 <code>&lt;head&gt;</code> 部分中，或者同时存在于两个部分中。<br>通常的做法是把函数放入 <code>&lt;head&gt;</code> 部分中，或者放在页面底部。这样就可以把它们安置到同一处位置，不会干扰页面的内容。</p>
 <p>例子：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">JavaScript 能够直接写入 HTML 输出流中：</div><div class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="xml"></span></div><div class="line">document.write("<span class="tag">&lt;<span class="name">h1</span>&gt;</span>This is a heading<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>");</div><div class="line">document.write("<span class="tag">&lt;<span class="name">p</span>&gt;</span>This is a paragraph.<span class="tag">&lt;/<span class="name">p</span>&gt;</span>");</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span></div><div class="line">您只能在 HTML 输出流中使用 <span class="tag">&lt;<span class="name">strong</span>&gt;</span>document.write<span class="tag">&lt;/<span class="name">strong</span>&gt;</span>。</div><div class="line">如果您在文档已加载后使用它（比如在函数中），会覆盖整个文档。</div><div class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>上面例子中的 JavaScript 语句，会在页面加载时执行。<br>通常，我们需要在某个事件发生时执行代码，比如当用户点击按钮时。<br>如果我们把 JavaScript 代码放入函数中，就可以在事件发生时调用该函数。  </p>
+<p>上面例子中的 JavaScript 语句，会在页面加载时执行。<br>通常，我们需要在某个事件发生时执行代码，比如当用户点击按钮时。<br>如果我们把 JavaScript 代码放入函数中，就可以在事件发生时调用该函数。</p>
 <h3 id="JavaScript-输出"><a href="#JavaScript-输出" class="headerlink" title="JavaScript 输出"></a>JavaScript 输出</h3><p>JavaScript 通常用于操作 HTML 元素。</p>
 <p>方式：操作 HTML 元素、写到文档输出。</p>
-<pre><code>1. document.getElementById(&quot;demo&quot;).innerHTML=&quot;My First JavaScript&quot;;  
-2. document.write(&quot;&lt;p&gt;My First JavaScript&lt;/p&gt;&quot;);  
+<pre><code>1. document.getElementById(&quot;demo&quot;).innerHTML=&quot;My First JavaScript&quot;;
+2. document.write(&quot;&lt;p&gt;My First JavaScript&lt;/p&gt;&quot;);
 </code></pre><p>注意：如果在文档已完成加载后执行 document.write，整个 HTML 页面将被覆盖。</p>
-<h3 id="JavaScript-变量"><a href="#JavaScript-变量" class="headerlink" title="JavaScript 变量"></a>JavaScript 变量</h3><p>当您向变量分配文本值时，应该用双引号或单引号包围这个值。当您向变量赋的值是数值时，不要使用引号。如果您用引号包围数值，该值会被作为文本来处理。  </p>
+<h3 id="JavaScript-变量"><a href="#JavaScript-变量" class="headerlink" title="JavaScript 变量"></a>JavaScript 变量</h3><p>当您向变量分配文本值时，应该用双引号或单引号包围这个值。当您向变量赋的值是数值时，不要使用引号。如果您用引号包围数值，该值会被作为文本来处理。</p>
 <p>JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型：</p>
 <pre><code>var x                // x 为 undefined
 var x = 6;           // x 为数字
 var x = &quot;Bill&quot;;      // x 为字符串
 </code></pre><p>JavaScript 变量均为对象。当您声明一个变量时，就创建了一个新的对象。</p>
-<h3 id="JavaScript-函数语法"><a href="#JavaScript-函数语法" class="headerlink" title="JavaScript 函数语法"></a>JavaScript 函数语法</h3><p>函数就是包裹在花括号中的代码块，前面使用了关键词 function：  </p>
+<h3 id="JavaScript-函数语法"><a href="#JavaScript-函数语法" class="headerlink" title="JavaScript 函数语法"></a>JavaScript 函数语法</h3><p>函数就是包裹在花括号中的代码块，前面使用了关键词 function：</p>
 <p>例子：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">function myFunction()</div><div class="line">&#123;</div><div class="line">alert("Hello World!");</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">"myFunction()"</span>&gt;</span>点击这里<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>当调用该函数时，会执行函数内的代码。<br>可以在某事件发生时直接调用函数（比如当用户点击按钮时），并且可由 JavaScript 在任何位置进行调用。  </p>
-<h3 id="JavaScript-对象"><a href="#JavaScript-对象" class="headerlink" title="JavaScript 对象"></a>JavaScript 对象</h3><p>JavaScript 中的所有事物都是对象：字符串、数值、数组、函数… 此外，JavaScript 允许自定义对象。<br>JavaScript 是面向对象的语言，但 JavaScript 不使用类。在 JavaScript 中，不会创建类，也不会通过类来创建对象。  </p>
+<p>当调用该函数时，会执行函数内的代码。<br>可以在某事件发生时直接调用函数（比如当用户点击按钮时），并且可由 JavaScript 在任何位置进行调用。</p>
+<h3 id="JavaScript-对象"><a href="#JavaScript-对象" class="headerlink" title="JavaScript 对象"></a>JavaScript 对象</h3><p>JavaScript 中的所有事物都是对象：字符串、数值、数组、函数… 此外，JavaScript 允许自定义对象。<br>JavaScript 是面向对象的语言，但 JavaScript 不使用类。在 JavaScript 中，不会创建类，也不会通过类来创建对象。</p>
 <p>访问对象的属性,访问对象的方法和 java 语言一样。</p>
 <h3 id="创建-JavaScript-对象"><a href="#创建-JavaScript-对象" class="headerlink" title="创建 JavaScript 对象"></a>创建 JavaScript 对象</h3><p>创建直接的实例(略)，使用对象构造器如下：</p>
 <pre><code>function person(firstname,lastname,age,eyecolor)
@@ -182,11 +182,12 @@ person.eyecolor=&quot;blue&quot;;
 <ol>
 <li>通过 id 找到 HTML 元素</li>
 <li>通过标签名找到 HTML 元素</li>
-<li><p>通过类名找到 HTML 元素</p>
-<p> var x=document.getElementById(“intro”);<br> var y=x.getElementsByTagName(“p”);<br> var y=x.getElementsByClassName(“xxx”);    </p>
-</li>
+<li>通过类名找到 HTML 元素</li>
 </ol>
-<h4 id="改变-HTML-输出流"><a href="#改变-HTML-输出流" class="headerlink" title="改变 HTML 输出流"></a>改变 HTML 输出流</h4><pre><code>document.write(Date());
+<pre><code>var x=document.getElementById(&quot;intro&quot;);
+var y=x.getElementsByTagName(&quot;p&quot;);
+var y=x.getElementsByClassName(&quot;xxx&quot;);
+</code></pre><h4 id="改变-HTML-输出流"><a href="#改变-HTML-输出流" class="headerlink" title="改变 HTML 输出流"></a>改变 HTML 输出流</h4><pre><code>document.write(Date());
 </code></pre><h4 id="改变-HTML-内容"><a href="#改变-HTML-内容" class="headerlink" title="改变 HTML 内容"></a>改变 HTML 内容</h4><pre><code>document.getElementById(id).innerHTML=new HTML
 </code></pre><h4 id="改变-HTML-属性"><a href="#改变-HTML-属性" class="headerlink" title="改变 HTML 属性"></a>改变 HTML 属性</h4><pre><code>document.getElementById(id).attribute=new value
 </code></pre><h4 id="改变-HTML-样式"><a href="#改变-HTML-样式" class="headerlink" title="改变 HTML 样式"></a>改变 HTML 样式</h4><pre><code>document.getElementById(id).style.property=new style
@@ -200,26 +201,163 @@ person.eyecolor=&quot;blue&quot;;
 <li>当提交 HTML 表单时</li>
 <li>当用户触发按键时</li>
 </ol>
-<font color="red">如需向 HTML 元素分配事件，您可以使用事件属性。</font><br>在下面的例子中，名为 changetext 的函数将在按钮被点击时执行。<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">function changetext(id)</div><div class="line">&#123;</div><div class="line">id.innerHTML="谢谢!";</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">onclick</span>=<span class="string">"changetext(this)"</span>&gt;</span>请点击该文本<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure><br><br>onload 和 onunload 事件会在用户进入或离开页面时被触发。<br>onload 事件可用于检测访问者的浏览器类型和浏览器版本，并基于这些信息来加载网页的正确版本。<br>onload 和 onunload 事件可用于处理 cookie。<br><br>onchange 事件常结合对输入字段的验证来使用。<br><br>onmouseover 和 onmouseout 事件可用于在用户的鼠标移至 HTML 元素上方或移出元素时触发函数。<br><br>onmousedown, onmouseup 以及 onclick 构成了鼠标点击事件的所有部分。首先当点击鼠标按钮时，会触发 onmousedown 事件，当释放鼠标按钮时，会触发 onmouseup 事件，最后，当完成鼠标点击时，会触发 onclick 事件。<br><br>#### 添加和删除节点（HTML 元素）<br><br>创建新的 HTML 元素<br>如需向 HTML DOM 添加新元素，您必须首先创建该元素（元素节点），然后向一个已存在的元素追加该元素。<br><br>    <script><br>    var para=document.createElement(“p”);<br>    var node=document.createTextNode(“这是新段落。”);<br>    para.appendChild(node);<br><br>    var element=document.getElementById(“div1”);<br>    element.appendChild(para);<br>    </script><br><br>删除已有的 HTML 元素<br><font color="red">如需删除 HTML 元素，您必须首先获得该元素的父元素：</font>
-
-<pre><code>&lt;script&gt;
-var parent=document.getElementById(&quot;div1&quot;);
-var child=document.getElementById(&quot;p1&quot;);
-parent.removeChild(child);
-&lt;/script&gt;
-</code></pre><h3 id="JavaScript-框架（库）"><a href="#JavaScript-框架（库）" class="headerlink" title="JavaScript 框架（库）"></a>JavaScript 框架（库）</h3><font color="red">JavaScript 高级程序设计（特别是对浏览器差异的复杂处理），通常很困难也很耗时。</font><br>为了应对这些调整，许多的 JavaScript (helper) 库应运而生。这些 JavaScript 库常被称为 JavaScript 框架。<br>在本教程中，我们将了解到一些广受欢迎的 JavaScript 框架：<br><br><em> jQuery
-</em> Prototype<br><em> MooTools<br><br>所有这些框架都提供针对常见 JavaScript 任务的函数，包括动画、DOM 操作以及 Ajax 处理。<br><br>jQuery 是目前最受欢迎的 JavaScript 框架。<font color="red">它使用 CSS 选择器来访问和操作网页上的 HTML 元素（DOM 对象）</font>。jQuery 同时提供 companion UI（用户界面）和插件。<br><br>## DOM<br><br>DOM 很简单，代码格式很固定。<br><br><a href="http://www.w3school.com.cn/jsref/index.asp" target="_blank" rel="external">JavaScript 参考手册</a> 中有 JavaScript 对象，Browser 对象，HTML DOM 对象的属性和方法。查看源码时，参照这个很有用。<br><br>## jQuery<br><br>jQuery 是一个 JavaScript 函数库(作用是被调用)。jQuery 极大地简化了 JavaScript 编程。<br><br>jQuery 库包含以下特性：
-
-</em> HTML 元素选取<br><em> HTML 元素操作
-</em> CSS 操作<br><em> HTML 事件函数
-</em> JavaScript 特效和动画<br><em> HTML DOM 遍历和修改
-</em> AJAX<br><em> Utilities<br><br>例子：<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>	<span class="comment">&lt;!-- 引入 jQuery 库，相当于 java 中 import 语句 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">$(document).ready(function()&#123;		//代码中 ready,click,hide 都是事件属性，本质上还是属性。不是函数。</div><div class="line">  $("p").click(function()&#123;			//事件属性的特点是，事件发生时，会执行相应的功能，即函数。</div><div class="line">  $(this).hide();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div></pre></td></tr></table></figure><br><br>jQuery 是为事件处理特别设计的。jQuery 事件处理方法是 jQuery 中的核心函数。<br>事件处理程序指的是当 HTML 中发生某些事件时所调用的方法。术语由事件“触发”（或“激发”）经常会被使用。<br>通常会把 jQuery 代码放到 <code>&lt;head&gt;</code> 部分的事件处理方法中。<br><br><strong>总结:</strong><br>由于 jQuery 是为处理 HTML 事件而特别设计的，那么当您遵循以下原则时，您的代码会更恰当且更易维护：
-
-</em> 把所有 jQuery 代码置于事件处理函数中<br><em> 把所有事件处理函数置于文档就绪事件处理器中
-</em> 把 jQuery 代码置于单独的 .js 文件中<br><em> 如果存在名称冲突，则重命名 jQuery 库<br><br>### jQuery - AJAX<br><br>AJAX 是与服务器交换数据的艺术，它在不重载全部页面的情况下，实现了对部分网页的更新。<br>AJAX = 异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。<br>简短地说，在不重载整个网页的情况下，AJAX 通过后台加载数据，并在网页上进行显示。<br><br>#### jQuery load() 方法<br><br>jQuery load() 方法是简单但强大的 AJAX 方法。load() 方法从服务器加载数据，并把返回的数据放入被选元素中。<br><br>语法：<br><br>    $(selector).load(URL,data,callback);<br><br>必需的 URL 参数规定您希望加载的 URL。<br>可选的 data 参数规定与请求一同发送的查询字符串键/值对集合。<br>可选的 callback 参数是 load() 方法完成后所执行的函数名称。<br><br>可选的 callback 参数规定当 load() 方法完成后所要允许的回调函数。<br>回调函数可以设置不同的参数：
-
-</em> responseTxt - 包含调用成功时的结果内容<br><em> statusTXT - 包含调用的状态
-</em> xhr - 包含 XMLHttpRequest 对象<br><br>下面的例子会在 load() 方法完成后显示一个提示框。如果 load() 方法已成功，则显示“外部内容加载成功！”，而如果失败，则显示错误消息：<br><br>例子：<br><br>    $(“button”).click(function(){<br>      $(“#div1”).load(“demo_test.txt”,function(responseTxt,statusTxt,xhr){<br>        if(statusTxt==”success”)<br>          alert(“外部内容加载成功！”);<br>        if(statusTxt==”error”)<br>          alert(“Error: “+xhr.status+”: “+xhr.statusText);<br>      });<br>    });<br><br>#### jQuery $.get() 方法<br><br>$.get() 方法通过 HTTP GET 请求从服务器上请求数据。<br><br>语法：<br><br>    $.get(URL,callback);<br><br>必需的 URL 参数规定您希望请求的 URL。<br>可选的 callback 参数是请求成功后所执行的函数名。<br>下面的例子使用 $.get() 方法从服务器上的一个文件中取回数据：<br><br>实例：<br><br>    $(“button”).click(function(){<br>      $.get(“demo_test.asp”,function(data,status){<br>        alert(“Data: “ + data + “\nStatus: “ + status);<br>      });<br>    });<br><br>#### jQuery $.post() 方法<br><br>$.post() 方法通过 HTTP POST 请求从服务器上请求数据。<br><br>语法：<br><br>    $.post(URL,data,callback);<br><br>必需的 URL 参数规定您希望请求的 URL。<br>可选的 data 参数规定连同请求发送的数据。<br>可选的 callback 参数是请求成功后所执行的函数名。<br><br>## AJAX<br><br>XMLHttpRequest 是 AJAX 的基础。XMLHttpRequest 用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><br>创建 XMLHttpRequest 对象的语法：<br><br>    variable=new XMLHttpRequest();<br><br>老版本的 Internet Explorer （IE5 和 IE6）使用 ActiveX 对象：<br><br>    variable=new ActiveXObject(“Microsoft.XMLHTTP”);<br><br>为了应对所有的现代浏览器，包括 IE5 和 IE6，请检查浏览器是否支持 XMLHttpRequest 对象。如果支持，则创建 XMLHttpRequest 对象。如果不支持，则创建 ActiveXObject。<br><br>如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的 open() 和 send() 方法：<br><br>方法 |    描述<br>—– |——<br>open(method,url,async)    | 规定请求的类型、URL 以及是否异步处理请求。<li>method：请求的类型；GET 或 POST</li><li>url：文件在服务器上的位置</li><li>async：true（异步）或 false（同步）</li><br>send(string)    | 将请求发送到服务器。<li>string：仅用于 POST 请求<br><br>如需获得来自服务器的响应，请使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。<br>属性 |    描述<br>—- | —-<br>responseText |    获得字符串形式的响应数据。<br>responseXML |    获得 XML 形式的响应数据。<br><br>### onreadystatechange 事件<br><br>当请求被发送到服务器时，我们需要执行一些基于响应的任务。<br>每当 readyState 改变时，就会触发 onreadystatechange 事件。<br><br>readyState 属性存有 XMLHttpRequest 的状态信息。<br>下面是 XMLHttpRequest 对象的三个重要的属性：<br><br>属性 |    描述<br>—- | —-<br>onreadystatechange |    <font color="red">存储函数（或函数名）</font>，每当 readyState 属性改变时，就会调用该函数。<br>readyState    | 存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。</li><li>0: 请求未初始化</li><li>1: 服务器连接已建立</li><li>2: 请求已接收</li><li>3: 请求处理中</li><li>4: 请求已完成，且响应已就绪</li><br>status    | 200: “OK” <br> 404: 未找到页面<br><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">function loadXMLDoc()</div><div class="line">&#123;</div><div class="line">var xmlhttp;</div><div class="line">if (window.XMLHttpRequest)</div><div class="line">  &#123;// code for IE7+, Firefox, Chrome, Opera, Safari</div><div class="line">  xmlhttp=new XMLHttpRequest();</div><div class="line">  &#125;</div><div class="line">else</div><div class="line">  &#123;// code for IE6, IE5</div><div class="line">  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");</div><div class="line">  &#125;</div><div class="line">xmlhttp.onreadystatechange=function()</div><div class="line">  &#123;</div><div class="line">  if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</div><div class="line">    &#123;</div><div class="line">    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">xmlhttp.open("GET","/ajax/test1.txt",true);</div><div class="line">xmlhttp.send();</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myDiv"</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Let AJAX change this text<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"loadXMLDoc()"</span>&gt;</span>通过 AJAX 改变内容<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure><br><br>## JSON<br><br><strong>JSON 是存储和交换文本信息的语法，类似 XML。</strong>JSON 比 XML 更小、更快，更易解析。<br><br>例子：<br><br>    {<br>    “employees”: [<br>    { “firstName”:”Bill” , “lastName”:”Gates” },<br>    { “firstName”:”George” , “lastName”:”Bush” },<br>    { “firstName”:”Thomas” , “lastName”:”Carter” }<br>    ]<br>    }<br><br><font color="red">JSON 对象在花括号中书写，一对花括号就表示一个对象(匿名的)。</font>	  
+<p><span style="color:red">如需向 HTML 元素分配事件，您可以使用事件属性。</span><br>在下面的例子中，名为 changetext 的函数将在按钮被点击时执行。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">function changetext(id)</div><div class="line">&#123;</div><div class="line">id.innerHTML="谢谢!";</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">onclick</span>=<span class="string">"changetext(this)"</span>&gt;</span>请点击该文本<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>onload 和 onunload 事件会在用户进入或离开页面时被触发。<br>onload 事件可用于检测访问者的浏览器类型和浏览器版本，并基于这些信息来加载网页的正确版本。<br>onload 和 onunload 事件可用于处理 cookie。</p>
+<p>onchange 事件常结合对输入字段的验证来使用。</p>
+<p>onmouseover 和 onmouseout 事件可用于在用户的鼠标移至 HTML 元素上方或移出元素时触发函数。</p>
+<p>onmousedown, onmouseup 以及 onclick 构成了鼠标点击事件的所有部分。首先当点击鼠标按钮时，会触发 onmousedown 事件，当释放鼠标按钮时，会触发 onmouseup 事件，最后，当完成鼠标点击时，会触发 onclick 事件。</p>
+<h4 id="添加和删除节点"><a href="#添加和删除节点" class="headerlink" title="添加和删除节点"></a>添加和删除节点</h4><p>创建新的 HTML 元素<br>如需向 HTML DOM 添加新元素，您必须首先创建该元素（元素节点），然后向一个已存在的元素追加该元素。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">var para=document.createElement("p");</div><div class="line">var node=document.createTextNode("这是新段落。");</div><div class="line">para.appendChild(node);</div><div class="line"></div><div class="line">var element=document.getElementById("div1");</div><div class="line">element.appendChild(para);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>删除已有的 HTML 元素<br><span style="color:red">如需删除 HTML 元素，您必须首先获得该元素的父元素：</span></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">var parent=document.getElementById("div1");</div><div class="line">var child=document.getElementById("p1");</div><div class="line">parent.removeChild(child);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="JavaScript-框架（库）"><a href="#JavaScript-框架（库）" class="headerlink" title="JavaScript 框架（库）"></a>JavaScript 框架（库）</h3><p><span style="color:red">JavaScript 高级程序设计（特别是对浏览器差异的复杂处理），通常很困难也很耗时。</span><br>为了应对这些调整，许多的 JavaScript (helper) 库应运而生。这些 JavaScript 库常被称为 JavaScript 框架。<br>在本教程中，我们将了解到一些广受欢迎的 JavaScript 框架：</p>
+<ol>
+<li>jQuery</li>
+<li>Prototype</li>
+<li>MooTools</li>
+</ol>
+<p>所有这些框架都提供针对常见 JavaScript 任务的函数，包括动画、DOM 操作以及 Ajax 处理。</p>
+<p>jQuery 是目前最受欢迎的 JavaScript 框架。<span style="color:red">它使用 CSS 选择器来访问和操作网页上的 HTML 元素（DOM 对象）</span>。jQuery 同时提供 companion UI（用户界面）和插件。</p>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><p>DOM 很简单，代码格式很固定。</p>
+<p><a href="http://www.w3school.com.cn/jsref/index.asp" target="_blank" rel="external">JavaScript 参考手册</a> 中有 JavaScript 对象，Browser 对象，HTML DOM 对象的属性和方法。查看源码时，参照这个很有用。</p>
+<h2 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h2><p>jQuery 是一个 JavaScript 函数库(作用是被调用)。jQuery 极大地简化了 JavaScript 编程。</p>
+<p>jQuery 库包含以下特性：</p>
+<ul>
+<li>HTML 元素选取</li>
+<li>HTML 元素操作</li>
+<li>CSS 操作</li>
+<li>HTML 事件函数</li>
+<li>JavaScript 特效和动画</li>
+<li>HTML DOM 遍历和修改</li>
+<li>AJAX</li>
+<li>Utilities</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>	<span class="comment">&lt;!-- 引入 jQuery 库，相当于 java 中 import 语句 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">$(document).ready(function()&#123;		//代码中 ready,click,hide 都是事件属性，本质上还是属性。不是函数。</div><div class="line">  $("p").click(function()&#123;			//事件属性的特点是，事件发生时，会执行相应的功能，即函数。</div><div class="line">  $(this).hide();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>jQuery 是为事件处理特别设计的。jQuery 事件处理方法是 jQuery 中的核心函数。<br>事件处理程序指的是当 HTML 中发生某些事件时所调用的方法。术语由事件“触发”（或“激发”）经常会被使用。<br>通常会把 jQuery 代码放到 <code>&lt;head&gt;</code> 部分的事件处理方法中。</p>
+<p><strong>总结:</strong><br>由于 jQuery 是为处理 HTML 事件而特别设计的，那么当您遵循以下原则时，您的代码会更恰当且更易维护：</p>
+<ul>
+<li>把所有 jQuery 代码置于事件处理函数中</li>
+<li>把所有事件处理函数置于文档就绪事件处理器中</li>
+<li>把 jQuery 代码置于单独的 .js 文件中</li>
+<li>如果存在名称冲突，则重命名 jQuery 库</li>
+</ul>
+<h3 id="jQuery-AJAX"><a href="#jQuery-AJAX" class="headerlink" title="jQuery - AJAX"></a>jQuery - AJAX</h3><p>AJAX 是与服务器交换数据的艺术，它在不重载全部页面的情况下，实现了对部分网页的更新。<br>AJAX = 异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。<br>简短地说，在不重载整个网页的情况下，AJAX 通过后台加载数据，并在网页上进行显示。  </p>
+<h4 id="jQuery-load-方法"><a href="#jQuery-load-方法" class="headerlink" title="jQuery load() 方法"></a>jQuery load() 方法</h4><p>jQuery load() 方法是简单但强大的 AJAX 方法。load() 方法从服务器加载数据，并把返回的数据放入被选元素中。</p>
+<p>语法：</p>
+<pre><code>$(selector).load(URL,data,callback);
+</code></pre><p>必需的 URL 参数规定您希望加载的 URL。<br>可选的 data 参数规定与请求一同发送的查询字符串键/值对集合。<br>可选的 callback 参数是 load() 方法完成后所执行的函数名称。  </p>
+<p>可选的 callback 参数规定当 load() 方法完成后所要允许的回调函数。<br>回调函数可以设置不同的参数：</p>
+<ul>
+<li>responseTxt - 包含调用成功时的结果内容</li>
+<li>statusTXT - 包含调用的状态</li>
+<li>xhr - 包含 XMLHttpRequest 对象</li>
+</ul>
+<p>下面的例子会在 load() 方法完成后显示一个提示框。如果 load() 方法已成功，则显示“外部内容加载成功！”，而如果失败，则显示错误消息：</p>
+<p>例子：</p>
+<pre><code>$(&quot;button&quot;).click(function(){
+  $(&quot;#div1&quot;).load(&quot;demo_test.txt&quot;,function(responseTxt,statusTxt,xhr){
+    if(statusTxt==&quot;success&quot;)
+      alert(&quot;外部内容加载成功！&quot;);
+    if(statusTxt==&quot;error&quot;)
+      alert(&quot;Error: &quot;+xhr.status+&quot;: &quot;+xhr.statusText);
+  });
+});
+</code></pre><h4 id="jQuery-get-方法"><a href="#jQuery-get-方法" class="headerlink" title="jQuery $.get() 方法"></a>jQuery $.get() 方法</h4><p>$.get() 方法通过 HTTP GET 请求从服务器上请求数据。</p>
+<p>语法：</p>
+<pre><code>$.get(URL,callback);
+</code></pre><p>必需的 URL 参数规定您希望请求的 URL。<br>可选的 callback 参数是请求成功后所执行的函数名。<br>下面的例子使用 $.get() 方法从服务器上的一个文件中取回数据：  </p>
+<p>实例：</p>
+<pre><code>$(&quot;button&quot;).click(function(){
+  $.get(&quot;demo_test.asp&quot;,function(data,status){
+    alert(&quot;Data: &quot; + data + &quot;\nStatus: &quot; + status);
+  });
+});
+</code></pre><h4 id="jQuery-post-方法"><a href="#jQuery-post-方法" class="headerlink" title="jQuery $.post() 方法"></a>jQuery $.post() 方法</h4><p>$.post() 方法通过 HTTP POST 请求从服务器上请求数据。</p>
+<p>语法：</p>
+<pre><code>$.post(URL,data,callback);
+</code></pre><p>必需的 URL 参数规定您希望请求的 URL。<br>可选的 data 参数规定连同请求发送的数据。<br>可选的 callback 参数是请求成功后所执行的函数名。  </p>
+<h2 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h2><p>XMLHttpRequest 是 AJAX 的基础。XMLHttpRequest 用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>创建 XMLHttpRequest 对象的语法：</p>
+<pre><code>variable=new XMLHttpRequest();
+</code></pre><p>老版本的 Internet Explorer （IE5 和 IE6）使用 ActiveX 对象：</p>
+<pre><code>variable=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+</code></pre><p>为了应对所有的现代浏览器，包括 IE5 和 IE6，请检查浏览器是否支持 XMLHttpRequest 对象。如果支持，则创建 XMLHttpRequest 对象。如果不支持，则创建 ActiveXObject。</p>
+<p>如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的 open() 和 send() 方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>open(method,url,async)</td>
+<td>规定请求的类型、URL 以及是否异步处理请求。<li>method：请求的类型；GET 或 POST</li><li>url：文件在服务器上的位置</li><li>async：true（异步）或 false（同步）</li></td>
+</tr>
+<tr>
+<td>send(string)</td>
+<td>将请求发送到服务器。<li>string：仅用于 POST 请求</li></td>
+</tr>
+</tbody>
+</table>
+<p>如需获得来自服务器的响应，请使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>responseText</td>
+<td>获得字符串形式的响应数据。</td>
+</tr>
+<tr>
+<td>responseXML</td>
+<td>获得 XML 形式的响应数据。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="onreadystatechange-事件"><a href="#onreadystatechange-事件" class="headerlink" title="onreadystatechange 事件"></a>onreadystatechange 事件</h3><p>当请求被发送到服务器时，我们需要执行一些基于响应的任务。<br>每当 readyState 改变时，就会触发 onreadystatechange 事件。  </p>
+<p>readyState 属性存有 XMLHttpRequest 的状态信息。<br>下面是 XMLHttpRequest 对象的三个重要的属性：  </p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onreadystatechange</td>
+<td><span style="color:red">存储函数（或函数名）</span>，每当 readyState 属性改变时，就会调用该函数。</td>
+</tr>
+<tr>
+<td>readyState</td>
+<td>存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。<li>0: 请求未初始化</li><li>1: 服务器连接已建立</li><li>2: 请求已接收</li><li>3: 请求处理中</li><li>4: 请求已完成，且响应已就绪</li></td>
+</tr>
+<tr>
+<td>status</td>
+<td>200: “OK” <br> 404: 未找到页面</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">function loadXMLDoc()</div><div class="line">&#123;</div><div class="line">var xmlhttp;</div><div class="line">if (window.XMLHttpRequest)</div><div class="line">  &#123;// code for IE7+, Firefox, Chrome, Opera, Safari</div><div class="line">  xmlhttp=new XMLHttpRequest();</div><div class="line">  &#125;</div><div class="line">else</div><div class="line">  &#123;// code for IE6, IE5</div><div class="line">  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");</div><div class="line">  &#125;</div><div class="line">xmlhttp.onreadystatechange=function()</div><div class="line">  &#123;</div><div class="line">  if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)</div><div class="line">    &#123;</div><div class="line">    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">xmlhttp.open("GET","/ajax/test1.txt",true);</div><div class="line">xmlhttp.send();</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"myDiv"</span>&gt;</span><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Let AJAX change this text<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">onclick</span>=<span class="string">"loadXMLDoc()"</span>&gt;</span>通过 AJAX 改变内容<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p><strong>JSON 是存储和交换文本信息的语法，类似 XML。</strong>JSON 比 XML 更小、更快，更易解析。</p>
+<p>例子： </p>
+<pre><code>{
+&quot;employees&quot;: [
+{ &quot;firstName&quot;:&quot;Bill&quot; , &quot;lastName&quot;:&quot;Gates&quot; },
+{ &quot;firstName&quot;:&quot;George&quot; , &quot;lastName&quot;:&quot;Bush&quot; },
+{ &quot;firstName&quot;:&quot;Thomas&quot; , &quot;lastName&quot;:&quot;Carter&quot; }
+]
+}
+</code></pre><p><span style="color:red">JSON 对象在花括号中书写，一对花括号就表示一个对象(匿名的)。</span></p>
+	  
 	</div>
 
 	<div>
@@ -227,9 +365,9 @@ parent.removeChild(child);
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-        
+				
+    	<li class="prev"><a href="/2017/06/13/带宽与延时知识整理/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -324,7 +462,7 @@ parent.removeChild(child);
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i>标签</a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/HTML-EJS-CSS-JavaScript-DOM-jQuery-AJAX-JSON/">HTML EJS CSS JavaScript DOM jQuery AJAX JSON<span>1</span></a></li>
+  <li><a href="/tags/HTML/">HTML<span>1</span></a></li> <li><a href="/tags/EJS/">EJS<span>1</span></a></li> <li><a href="/tags/CSS/">CSS<span>1</span></a></li> <li><a href="/tags/JavaScript/">JavaScript<span>1</span></a></li> <li><a href="/tags/DOM/">DOM<span>1</span></a></li> <li><a href="/tags/jQuery/">jQuery<span>1</span></a></li> <li><a href="/tags/AJAX/">AJAX<span>1</span></a></li> <li><a href="/tags/JSON/">JSON<span>1</span></a></li>
     </ul>
 	</div>
 		
@@ -334,7 +472,7 @@ parent.removeChild(child);
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i>目录</a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#HTML"><span class="toc-article-text">HTML</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#EJS-模板引擎"><span class="toc-article-text">EJS 模板引擎</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#CSS"><span class="toc-article-text">CSS</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#JavaScript"><span class="toc-article-text">JavaScript</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-实现"><span class="toc-article-text">JavaScript 实现</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-输出"><span class="toc-article-text">JavaScript 输出</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-变量"><span class="toc-article-text">JavaScript 变量</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-函数语法"><span class="toc-article-text">JavaScript 函数语法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-对象"><span class="toc-article-text">JavaScript 对象</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#创建-JavaScript-对象"><span class="toc-article-text">创建 JavaScript 对象</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#把属性添加到-JavaScript-对象"><span class="toc-article-text">把属性添加到 JavaScript 对象</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#把方法添加到-JavaScript-对象"><span class="toc-article-text">把方法添加到 JavaScript 对象</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JS-HTML-DOM"><span class="toc-article-text">JS HTML DOM</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#查找-HTML-元素"><span class="toc-article-text">查找 HTML 元素</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-输出流"><span class="toc-article-text">改变 HTML 输出流</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-内容"><span class="toc-article-text">改变 HTML 内容</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-属性"><span class="toc-article-text">改变 HTML 属性</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-样式"><span class="toc-article-text">改变 HTML 样式</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#对事件做出反应"><span class="toc-article-text">对事件做出反应</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-框架（库）"><span class="toc-article-text">JavaScript 框架（库）</span></a></li></ol></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#HTML"><span class="toc-article-text">HTML</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#EJS-模板引擎"><span class="toc-article-text">EJS 模板引擎</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#CSS"><span class="toc-article-text">CSS</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#JavaScript"><span class="toc-article-text">JavaScript</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-实现"><span class="toc-article-text">JavaScript 实现</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-输出"><span class="toc-article-text">JavaScript 输出</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-变量"><span class="toc-article-text">JavaScript 变量</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-函数语法"><span class="toc-article-text">JavaScript 函数语法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-对象"><span class="toc-article-text">JavaScript 对象</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#创建-JavaScript-对象"><span class="toc-article-text">创建 JavaScript 对象</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#把属性添加到-JavaScript-对象"><span class="toc-article-text">把属性添加到 JavaScript 对象</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#把方法添加到-JavaScript-对象"><span class="toc-article-text">把方法添加到 JavaScript 对象</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JS-HTML-DOM"><span class="toc-article-text">JS HTML DOM</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#查找-HTML-元素"><span class="toc-article-text">查找 HTML 元素</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-输出流"><span class="toc-article-text">改变 HTML 输出流</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-内容"><span class="toc-article-text">改变 HTML 内容</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-属性"><span class="toc-article-text">改变 HTML 属性</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#改变-HTML-样式"><span class="toc-article-text">改变 HTML 样式</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#对事件做出反应"><span class="toc-article-text">对事件做出反应</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#添加和删除节点"><span class="toc-article-text">添加和删除节点</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JavaScript-框架（库）"><span class="toc-article-text">JavaScript 框架（库）</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#DOM"><span class="toc-article-text">DOM</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#jQuery"><span class="toc-article-text">jQuery</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#jQuery-AJAX"><span class="toc-article-text">jQuery - AJAX</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#jQuery-load-方法"><span class="toc-article-text">jQuery load() 方法</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#jQuery-get-方法"><span class="toc-article-text">jQuery $.get() 方法</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#jQuery-post-方法"><span class="toc-article-text">jQuery $.post() 方法</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#AJAX"><span class="toc-article-text">AJAX</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#onreadystatechange-事件"><span class="toc-article-text">onreadystatechange 事件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#JSON"><span class="toc-article-text">JSON</span></a></li></ol>
 		</div>
 	
 	</div>
