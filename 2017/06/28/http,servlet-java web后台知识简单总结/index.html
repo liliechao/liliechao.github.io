@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>http,servlet,jsp-java web后台知识简单总结 | Liechao&#39;s HomePage</title>
+  <meta name="author" content="liliechao">
+  
+  <meta name="description" content="http,servlet,jsp 总结，包括 servletConfig,servletContext,servletRequest,servletResponse,session,cookie,EL 表达式,jstl 标签库，servletFilter等知识点，这里只是总结一些介绍性的东西，具体的应用查看对用的 API 文档就好，就不说具体应用了。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="http,servlet,jsp-java web后台知识简单总结"/>
+  <meta property="og:site_name" content="Liechao&#39;s HomePage"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100592085-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Liechao&#39;s HomePage</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> http,servlet,jsp-java web后台知识简单总结</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>http,servlet,jsp 总结，包括 servletConfig,servletContext,servletRequest,servletResponse,session,cookie,EL 表达式,jstl 标签库，servletFilter等知识点，这里只是总结一些介绍性的东西，具体的应用查看对用的 API 文档就好，就不说具体应用了。<br><a id="more"></a></p>
+<h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><p>Http 协议格式参考网页： <a href="https://my.oschina.net/manmao/blog/549123" target="_blank" rel="external">https://my.oschina.net/manmao/blog/549123</a><br>其中各字段的内容我就没详细看了，以后用到再看，反正都是了解性东西。</p>
+<h2 id="servlet"><a href="#servlet" class="headerlink" title="servlet"></a>servlet</h2><p>一个 servlet 实现对象可以处理一个请求，一个 web 应用中有多个 servlet 实现对象，他们之间的数据交互通过 servletContext 完成。</p>
+<h3 id="Servlet的运行过程"><a href="#Servlet的运行过程" class="headerlink" title="Servlet的运行过程"></a>Servlet的运行过程</h3><p>Servlet程序是由WEB服务器调用，web服务器收到客户端的Servlet访问请求后：</p>
+<ol>
+<li>Web服务器首先检查是否已经装载并创建了该Servlet的实例对象。如果是，则直接执行第4步，否则，执行第2步。</li>
+<li>装载并创建该Servlet的一个实例对象。 </li>
+<li>调用Servlet实例对象的init()方法。</li>
+<li>建一个用于封装HTTP请求消息的HttpServletRequest对象和一个代表HTTP响应消息的HttpServletResponse对象，然后调用Servlet的service()方法并将请求和响应对象作为参数传递进去。</li>
+<li>WEB应用程序被停止或重新启动之前，Servlet引擎将卸载Servlet，并在卸载之前调用Servlet的destroy()方法。 </li>
+</ol>
+<h3 id="servletConfig"><a href="#servletConfig" class="headerlink" title="servletConfig"></a>servletConfig</h3><p>在 Servlet 的配置文件中，可以使用一个或多个 &lt;init-param&gt; 标签为 servlet 配置一些初始化参数。</p>
+<p>当 servlet 配置了初始化参数后，web容器在创建servlet实例对象时，会自动将这些初始化参数封装到ServletConfig对象中，并在调用servlet的init方法时，将ServletConfig对象传递给servlet。进而，程序员通过ServletConfig对象就可以得到当前servlet的初始化参数信息。</p>
+<p>###　servletContext</p>
+<p>WEB容器在启动时，它会为每个WEB应用程序都创建一个对应的ServletContext对象，它代表当前web应用。</p>
+<p>ServletContext对象被包含在ServletConfig对象中，开发人员在编写servlet时，可以通过ServletConfig.getServletContext方法获得对ServletContext对象的引用。</p>
+<p>由于一个WEB应用中的所有Servlet共享同一个ServletContext对象，因此Servlet对象之间可以通过ServletContext对象来实现通讯。ServletContext对象通常也被称之为context域对象。</p>
+<h4 id="ServletContext应用"><a href="#ServletContext应用" class="headerlink" title="ServletContext应用"></a>ServletContext应用</h4><ol>
+<li>多个Servlet通过ServletContext对象实现数据共享。</li>
+<li>获取WEB应用的初始化参数。</li>
+<li>实现Servlet的转发。</li>
+<li>利用ServletContext对象读取资源文件。<br>得到文件路径<br>读取资源文件的三种方式<br>.properties文件（属性文件）  </li>
+</ol>
+<h3 id="servletRequest"><a href="#servletRequest" class="headerlink" title="servletRequest"></a>servletRequest</h3><p>API信息：<br>获得客户机信息</p>
+<pre><code>getRequestURL方法返回客户端发出请求时的完整URL。
+getRequestURI方法返回请求行中的资源名部分。
+getQueryString 方法返回请求行中的参数部分。
+getPathInfo方法返回请求URL中的额外路径信息。额外路径信息是请求URL中的位于Servlet的路径之后和查询参数之前的内容，它以“/”开头。
+getRemoteAddr方法返回发出请求的客户机的IP地址
+getRemoteHost方法返回发出请求的客户机的完整主机名
+getRemotePort方法返回客户机所使用的网络端口号
+getLocalAddr方法返回WEB服务器的IP地址。
+getLocalName方法返回WEB服务器的主机名
+</code></pre><p>获得客户机请求头</p>
+<pre><code>getHeader方法 
+getHeaders方法 
+getHeaderNames方法 
+获得客户机请求参数(客户端提交的数据)
+getParameter方法
+getParameterValues（String name）方法
+getParameterNames方法 
+getParameterMap方法
+</code></pre><h4 id="request常见应用"><a href="#request常见应用" class="headerlink" title="request常见应用"></a>request常见应用</h4><ol>
+<li>防盗链</li>
+<li>各种表单输入项数据的获取<br>text、password、radio、checkbox、file、select、textarea、 hidden、image、button给js编程用</li>
+<li>请求参数的中文乱码问题 </li>
+<li>Javascript防止表单重复提交</li>
+<li>URL地址的编码</li>
+<li>request对象实现请求转发：请求转发指一个web资源收到客户端请求后，通知服务器去调用另外一个web资源进行处理。</li>
+<li>请求转发的应用场景：MVC设计模式</li>
+<li>request对象提供了一个getRequestDispatcher方法，该方法返回一个RequestDispatcher对象，调用这个对象的forward方法可以实现请求转发。<br>9。 request对象同时也是一个域对象，开发人员通过request对象在实现转发时，把数据通过request对象带给其它web资源处理。<br>setAttribute方法<br>getAttribute方法<br>removeAttribute方法<br>getAttributeNames方法</li>
+</ol>
+<h3 id="response常见应用"><a href="#response常见应用" class="headerlink" title="response常见应用"></a>response常见应用</h3><ol>
+<li>向客户端输出中文数据<br>分别以OutputStream和PrintWriter输出<br>用OutputStream输出1，客户端看到的是什么？</li>
+<li>文件下载</li>
+<li>生成随机图片</li>
+<li>发送http头，控制浏览器定时刷新网页(REFRESH)</li>
+<li>发送http头，控制浏览器禁止缓存当前文档内容<br>多学一招：使用html语言里面的<meta>标签来控制浏览器行为</li>
+<li>通过response实现请求重定向。</li>
+<li>请求重定向指：一个web资源收到客户端请求后，通知客户端去访问另外一个web资源，这称之为请求重定向。<br>应用场景：用户注册。<br>实现方式：response.sendRedirect()<br>实现原理：302状态码和location头即可实现重定向</li>
+</ol>
+<h3 id="session-Cookie"><a href="#session-Cookie" class="headerlink" title="session Cookie"></a>session Cookie</h3><p>什么是会话？<br>会话可简单理解为：用户开一个浏览器，点击多个超链接，访问服务器多个web资源，然后关闭浏览器，整个过程称之为一个会话。</p>
+<p>会话过程中要解决的一些问题？<br>每个用户在使用浏览器与服务器进行会话的过程中，不可避免各自会产生一些数据，服务器要想办法为每个用户保存这些数据。<br>例如：多个用户点击超链接通过一个servlet各自购买了一个商品，服务器应该想办法把每一个用户购买的商品保存在各自的地方，以便于这些用户点结帐servlet时，结帐servlet可以得到用户各自购买的商品为用户结帐。</p>
+<p>保存会话数据的两种技术：</p>
+<ol>
+<li>Cookie<br>Cookie是客户端技术，服务器把每个用户的数据以cookie的形式写给用户各自的浏览器。当用户使用浏览器再去访问服务器中的web资源时，就会带着各自的数据去。这样，web资源处理的就是用户各自的数据了。</li>
+<li>Session<br>Session是服务器端技术，利用这个技术，服务器在运行时可以为每一个用户的浏览器创建一个其独享的session对象，由于session为用户浏览器独享，所以用户在访问服务器的web资源时，可以把各自的数据放在各自的session中，当用户再去访问服务器中的其它web资源时，其它web资源再从用户各自的session中取出数据为用户服务。</li>
+</ol>
+<p>session 技术<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/servlet/session.JPG" alt=""></p>
+<p>cookie 技术<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/servlet/cookie.JPG" alt=""></p>
+<h2 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h2><p>MVC 架构中的 view 用的就是 jsp 技术。</p>
+<p>jsp 原理：jsp 会被 tomcat 翻译为一个 servlet 实例对象。</p>
+<p>jsp 语法挺简答的，就是 9 大隐式对象要记一下。</p>
+<p>掌握下面的就差不多了：</p>
+<pre><code>JSP表达式
+JSP脚本程序
+JSP注释
+JSP指令
+JSP标签 
+JSP隐式对象
+</code></pre><p>参考网页：<br><a href="http://www.runoob.com/jsp/jsp-implicit-objects.html" target="_blank" rel="external">http://www.runoob.com/jsp/jsp-implicit-objects.html</a></p>
+<h3 id="EL表达式入门"><a href="#EL表达式入门" class="headerlink" title="EL表达式入门"></a>EL表达式入门</h3><p>EL表达式用于获取数据，在JSP页面中可使用${标识符}的形式，通知JSP引擎调用pageContext.findAttribute()方法，以标识符为关键字从各个域对象中获取对象。如果域对象中不存在标识符所对应的对象，则返回结果为””（注意，不是null）。</p>
+<p>EL表达式中也可以使用${customerBean.address}的形式来访问JavaBean对象的属性。</p>
+<p>结合JSTL标签，EL表达式也可轻松获取各种集合中的元素。</p>
+<p>EL表达式也可使用类如${1==1}的形式进行简单的逻辑判断。</p>
+<p>详细学习，请见：<br><a href="http://www.runoob.com/jsp/jsp-expression-language.html" target="_blank" rel="external">http://www.runoob.com/jsp/jsp-expression-language.html</a></p>
+<h3 id="JSTL标签库入门"><a href="#JSTL标签库入门" class="headerlink" title="JSTL标签库入门"></a>JSTL标签库入门</h3><p>JSTL是sun公司开发的一套标签库，使用JSTL可以在页面中实现一些简单的逻辑，从而替换页面中的脚本代码。</p>
+<p>在页面中使用JSTL标签需完成以下2个步骤：</p>
+<p>１. 导入jstl.jar和standerd.jar这两个JSTL的jar文件。<br>２. 在JSP页面中使用&lt;%@ tablib url=“”  prifix=“” %&gt;元素导入标签库。</p>
+<p>JSTL标签库中常用标签：</p>
+<pre><code>&lt;c:foreach var=“” items=“”&gt;
+&lt;c:if test=“”&gt;
+</code></pre><p>详细学习，请见：<br><a href="http://www.runoob.com/jsp/jsp-jstl.html" target="_blank" rel="external">http://www.runoob.com/jsp/jsp-jstl.html</a></p>
+<h2 id="servletFilter"><a href="#servletFilter" class="headerlink" title="servletFilter"></a>servletFilter</h2><p>Servlet API中提供了一个Filter接口，开发web应用时，如果编写的Java类实现了这个接口，则把这个java类称之为过滤器Filter。通过Filter技术，开发人员可以实现用户在访问某个目标资源之前，对访问的请求和响应进行拦截，如下所示：<br><img src="http://oqz36ha1t.bkt.clouddn.com/blog/servlet/filter.JPG" alt=""></p>
+<p>自己感觉类似于动态代理，或者是面向切面编程的思想。</p>
+<p>其他的一些知识和 httpServlet 差不多，就不详细说了。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2017/06/30/struts-java web后台知识简单总结/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/06/28/XML,tomcat-java web后台知识简单总结/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        <span id="busuanzi_container_page_pv">本文总阅读量<span id="busuanzi_value_page_pv"></span>次.</span>
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div id="disqus_thread">
+  	 <script>
+	    (function() {  // DON'T EDIT BELOW THIS LINE
+	        var d = document, s = d.createElement('script');
+	        
+	        s.src = 'https://liliechao.disqus.com/embed.js';
+	        
+	        s.setAttribute('data-timestamp', +new Date());
+	        (d.head || d.body).appendChild(s);
+	    })();
+	 </script>
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-06-28 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i>类别</a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/后台/">后台<span>3</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i>标签</a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/XML/">XML<span>2</span></a></li> <li><a href="/tags/tomcat/">tomcat<span>2</span></a></li> <li><a href="/tags/http/">http<span>1</span></a></li> <li><a href="/tags/servlet/">servlet<span>1</span></a></li> <li><a href="/tags/jsp/">jsp<span>1</span></a></li> <li><a href="/tags/servletFilter/">servletFilter<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i>目录</a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#http"><span class="toc-article-text">http</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#servlet"><span class="toc-article-text">servlet</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Servlet的运行过程"><span class="toc-article-text">Servlet的运行过程</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#servletConfig"><span class="toc-article-text">servletConfig</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#ServletContext应用"><span class="toc-article-text">ServletContext应用</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#servletRequest"><span class="toc-article-text">servletRequest</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#request常见应用"><span class="toc-article-text">request常见应用</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#response常见应用"><span class="toc-article-text">response常见应用</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#session-Cookie"><span class="toc-article-text">session Cookie</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#JSP"><span class="toc-article-text">JSP</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#EL表达式入门"><span class="toc-article-text">EL表达式入门</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#JSTL标签库入门"><span class="toc-article-text">JSTL标签库入门</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#servletFilter"><span class="toc-article-text">servletFilter</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'liliechao';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+  &copy; 2017 liliechao
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+      <span id="busuanzi_container_site_uv"> 本站访客数<span id="busuanzi_value_site_uv"></span>人次</span>.
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'yB7DdN7Wxn6zSD5RGBZ1','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+</body>
+   </html>
