@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>maven,OSGI,karaf 学习笔记 | Liechao&#39;s HomePage</title>
+  <meta name="author" content="liliechao">
+  
+  <meta name="description" content="研一时在 opendaylight 控制器上开发过路由插件，当时开发时半懂不懂的，很多东西都没弄清楚。最近为找找工作做准备，准备重新好好学习 opendatlight。opendatlight 源码中涉及到的知识有：maven，OSGI，karaf，yang 技术；Config Subsystem，MD-SAL，MD-SAL Clustering 子系统；NETCONF，RESTCONF 协议。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="maven,OSGI,karaf 学习笔记"/>
+  <meta property="og:site_name" content="Liechao&#39;s HomePage"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100592085-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Liechao&#39;s HomePage</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> maven,OSGI,karaf 学习笔记</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>研一时在 opendaylight 控制器上开发过路由插件，当时开发时半懂不懂的，很多东西都没弄清楚。最近为找找工作做准备，准备重新好好学习 opendatlight。<br>opendatlight 源码中涉及到的知识有：maven，OSGI，karaf，yang 技术；Config Subsystem，MD-SAL，MD-SAL Clustering 子系统；NETCONF，RESTCONF 协议。<br><a id="more"></a></p>
+<h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><p>At first glance Maven can appear to be many things, but in a nutshell Maven is an attempt to apply patterns to a project’s build infrastructure in order to promote comprehension and productivity by providing a clear path in the use of best practices. Maven is essentially a project management and comprehension tool and as such provides a way to help with managing:</p>
+<ul>
+<li>Builds</li>
+<li>Documentation</li>
+<li>Reporting</li>
+<li>Dependencies</li>
+<li>SCMs</li>
+<li>Distribution</li>
+<li>Releases</li>
+</ul>
+<p>maven 是项目管理工具，确实很好用。自己接触过的使用 maven 管理的项目：opendaylight，spring，hibernate。</p>
+<p>pom.xml 文件标签详解：<a href="https://maven.apache.org/pom.html" target="_blank" rel="external">https://maven.apache.org/pom.html</a><br>配置参考网址：<a href="https://maven.apache.org/settings.html" target="_blank" rel="external">https://maven.apache.org/settings.html</a></p>
+<p>可以打开一个项目的 pom.xml 查看，遇到不认得的标签就去上面网页查，这样学习比较快。<br>我觉得理解了 pom.xml 文件标签含义和 maven 工具的配置，就算 maven 入门了。</p>
+<p>顺便附一个官网入门指南：<a href="https://maven.apache.org/guides/getting-started/index.html" target="_blank" rel="external">https://maven.apache.org/guides/getting-started/index.html</a><br>因为自己原来已经接触过 maven 了，对自己用处不太大。</p>
+<h3 id="maven-插件"><a href="#maven-插件" class="headerlink" title="maven 插件"></a>maven 插件</h3><p>深入学习的话，需要学习 maven 强大的插件功能。<br><a href="https://maven.apache.org/plugins/index.html" target="_blank" rel="external">https://maven.apache.org/plugins/index.html</a></p>
+<p>我们都知道Maven本质上是一个插件框架，它的核心并不执行任何具体的构建任务，所有这些任务都交给插件来完成，例如编译源代码是由maven-compiler-plugin完成的。进一步说，每个任务对应了一个插件目标（goal），每个插件会有一个或者多个目标，例如maven-compiler-plugin的compile目标用来编译位于src/main/java/目录下的主源码，testCompile目标用来编译位于src/test/java/目录下的测试源码。</p>
+<p>用户可以通过两种方式调用Maven插件目标。第一种方式是将插件目标与生命周期阶段（lifecycle phase）绑定，这样用户在命令行只是输入生命周期阶段而已，例如Maven默认将maven-compiler-plugin的compile目标与compile生命周期阶段绑定，因此命令mvn compile实际上是先定位到compile这一生命周期阶段，然后再根据绑定关系调用maven-compiler-plugin的compile目标。第二种方式是直接在命令行指定要执行的插件目标，例如mvn archetype:generate 就表示调用maven-archetype-plugin的generate目标，这种带冒号的调用方式与生命周期无关。</p>
+<p><strong>maven plugin 案例分析</strong></p>
+<p>在 opendaylight 的各个子项目中都引入了 maven-bundle-plugin,下面列出 routing 中 pom.xml 部分内容。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.felix<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-bundle-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">extensions</span>&gt;</span>true<span class="tag">&lt;/<span class="name">extensions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">instructions</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">Import-Package</span>&gt;</span>org.slf4j,</div><div class="line">              org.opendaylight.controller.sal.routing,</div><div class="line">              org.opendaylight.controller.sal.core,</div><div class="line">              org.opendaylight.controller.sal.topology,</div><div class="line">              org.opendaylight.controller.sal.utils,</div><div class="line">              org.opendaylight.controller.sal.reader,</div><div class="line">              org.opendaylight.controller.clustering.services,</div><div class="line">              org.apache.commons.collections15,</div><div class="line">              org.opendaylight.controller.switchmanager,</div><div class="line">              org.opendaylight.controller.topologymanager,</div><div class="line">              edu.uci.ics.jung.graph,</div><div class="line">              edu.uci.ics.jung.algorithms.shortestpath,</div><div class="line">              edu.uci.ics.jung.graph.util,</div><div class="line">              org.apache.felix.dm,</div><div class="line">              org.osgi.framework,</div><div class="line">              org.apache.felix.service.command,</div><div class="line">              org.junit;resolution:=optional<span class="tag">&lt;/<span class="name">Import-Package</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">Bundle-Activator</span>&gt;</span>org.opendaylight.controller.routing.dijkstra_implementation.internal.Activator<span class="tag">&lt;/<span class="name">Bundle-Activator</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">instructions</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">manifestLocation</span>&gt;</span>$&#123;project.basedir&#125;/META-INF<span class="tag">&lt;/<span class="name">manifestLocation</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>网上查看 maven-bundle-plugin 的执行目标信息如下：</p>
+<p>General Information about the goals.</p>
+<pre><code>bundle:bundle Create an OSGi bundle from Maven project. (life-cycle goal)
+bundle:manifest Generate an OSGi manifest for this project.
+bundle:cleanVersions Convert a group of versions to OSGi format.
+bundle:instructions Generate BND instructions for this project.
+bundle:install Installs bundle details in the local OBR repository. (life-cycle goal)
+bundle:deploy Deploys bundle details to a remote OBR repository. (life-cycle goal)
+bundle:index Index the content of a maven repository using OBR.
+bundle:install-file Installs bundle details in the local OBR repository. (command-line goal)
+bundle:deploy-file Deploys bundle details to a remote OBR repository. (command-line goal)
+bundle:clean Clean a local OBR repository by finding and removing missing resources.
+bundle:remote-clean Clean a remote OBR repository by finding and removing missing resources.
+bundle:ant Generate Ant script to create the bundle. (you should run ant:ant first)
+</code></pre><p>可以看出这个插件中部分 goals 是与生命周期绑定的，部分没有。我们执行 maven：install 其实调用的 bundle：install 功能。</p>
+<p>再附上几个我原来看过的中文网址：</p>
+<ol>
+<li><a href="http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-1-406235-zhs.html" target="_blank" rel="external">Apache Maven 入门篇 ( 上 )</a></li>
+<li><a href="http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-2-405568-zhs.html" target="_blank" rel="external">Apache Maven 入门篇 ( 下 )</a></li>
+<li><a href="http://www.yiibai.com/maven/" target="_blank" rel="external">细致全面的Maven教程</a></li>
+<li><a href="http://www.infoq.com/cn/news/2011/04/xxb-maven-7-plugin" target="_blank" rel="external">maven 插件介绍</a></li>
+<li><a href="http://felix.apache.org/components/bundle-plugin/index.html" target="_blank" rel="external">maven-bundle-plugin</a></li>
+</ol>
+<p><strong>待解决疑惑：</strong></p>
+<p>opendaylight 提供的 settings.xml 文件中，有两个 activeProfile 标签，看网上的解释说可以激活多个 profile，那都激活后哪一个会起作用？</p>
+<pre><code>&lt;activeProfiles&gt;
+    &lt;activeProfile&gt;opendaylight-release&lt;/activeProfile&gt;
+    &lt;activeProfile&gt;opendaylight-snapshots&lt;/activeProfile&gt;
+  &lt;/activeProfiles&gt;
+</code></pre><p>参考网址：<a href="http://blog.csdn.net/taiyangdao/article/details/52311257" target="_blank" rel="external">http://blog.csdn.net/taiyangdao/article/details/52311257</a></p>
+<h2 id="OSGI-入门"><a href="#OSGI-入门" class="headerlink" title="OSGI 入门"></a>OSGI 入门</h2><p>OSGI 是一个标准，实现这个标准的产品有：apache felix，Equinox等。</p>
+<p>OSGI 架构图<br><img src="https://www.osgi.org/wp-content/uploads/layering-osgi.png" alt=""></p>
+<p>OSGI 可以分为三层：模块层，生命周期层，服务层。<br>每一层的学习可以看下面的入门教程。</p>
+<p>参考书目和文档：</p>
+<ol>
+<li>《深入理解OSGi Equinox原理、应用与最佳实践》，讲的很详细。</li>
+<li><a href="http://felix.apache.org/documentation.html" target="_blank" rel="external">官网文档</a></li>
+<li><a href="http://osgi.com.cn/" target="_blank" rel="external">中文社区</a></li>
+<li><a href="http://tianmaying.com/course/osgi-toturial" target="_blank" rel="external">入门教程</a></li>
+<li><a href="https://osgi.org/download/r6/osgi.core-6.0.0.pdf" target="_blank" rel="external">OSGi Core Release 6 Specification</a></li>
+<li><a href="https://www.osgi.org/developer/specifications/" target="_blank" rel="external">里面有 Specifications，Javadoc，XML Schemas 等内容</a></li>
+</ol>
+<h2 id="karaf"><a href="#karaf" class="headerlink" title="karaf"></a>karaf</h2><p>Karaf Container is a modern and polymorphic container.It’s a lightweight, powerful, and enterprise ready container powered by OSGi.</p>
+<p>karaf 架构图<br><img src="http://karaf.apache.org/images/karaf_architecture.png" alt=""></p>
+<p>Karaf安装目录结构如下：</p>
+<pre><code>/bin: 启动脚本
+/etc: 初始化文件
+/data: 工作目录
+/cache: OSGi框架包缓存
+/generated-bundles: 部署使用的临时文件夹
+/log: 日志文件
+/deploy: 热部署目录
+/instances: 含有子实例的目录
+/lib: 包含引导库
+/lib/ext:JRE扩展目录
+/lib/endorsed: 赞同库目录
+/system: OSGi包库，作为一个Maven2存储库
+</code></pre><p>Data文件夹包括karaf所有的工作和临时文件，如果你想从一个初始状态重启，你可以清空这个目录，这和“恢复初始化设置”一样的效果。<br>摘自： <a href="http://www.osgi.com.cn/article/7289403" target="_blank" rel="external">http://www.osgi.com.cn/article/7289403</a></p>
+<p>karaf 使用教程：<a href="http://karaf.apache.org/manual/latest/" target="_blank" rel="external">http://karaf.apache.org/manual/latest/</a><br>上面教程学习了一部分，下次有需要再看。</p>
+<p>待解决疑惑：<br>felix 是如何确定 bundle 的启动级别的？<br>karaf 呢？它又是如何确定 bundle 的启动级别的？  </p>
+<p>第一个问题，我觉得跟 OSGI 的依赖解析规则有关，根据解析的结果，确定启动顺序。</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/07/04/struts2 中 struts2-rest-showcase 例子解读/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        <span id="busuanzi_container_page_pv">本文总阅读量<span id="busuanzi_value_page_pv"></span>次.</span>
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div id="disqus_thread">
+  	 <script>
+	    (function() {  // DON'T EDIT BELOW THIS LINE
+	        var d = document, s = d.createElement('script');
+	        
+	        s.src = 'https://liliechao.disqus.com/embed.js';
+	        
+	        s.setAttribute('data-timestamp', +new Date());
+	        (d.head || d.body).appendChild(s);
+	    })();
+	 </script>
+     <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  	 </div>
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-07-04 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i>类别</a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/opendaylight/">opendaylight<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i>标签</a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/maven/">maven<span>1</span></a></li> <li><a href="/tags/OSGI/">OSGI<span>1</span></a></li> <li><a href="/tags/karaf/">karaf<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i>目录</a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#maven"><span class="toc-article-text">maven</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#maven-插件"><span class="toc-article-text">maven 插件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#OSGI-入门"><span class="toc-article-text">OSGI 入门</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#karaf"><span class="toc-article-text">karaf</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+var disqus_shortname = 'liliechao';
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+  &copy; 2017 liliechao
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+      <span id="busuanzi_container_site_uv"> 本站访客数<span id="busuanzi_value_site_uv"></span>人次</span>.
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'yB7DdN7Wxn6zSD5RGBZ1','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+</body>
+   </html>

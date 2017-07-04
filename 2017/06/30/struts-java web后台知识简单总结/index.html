@@ -121,7 +121,141 @@
 	  		
 
 	  <p>struts1 与 struts2 总结。<br><a id="more"></a></p>
-	  
+<p>struts1 所学版本：1.3.8<br>struts2 所学版本：2.5.10.1</p>
+<h2 id="补充-tomcat-知识"><a href="#补充-tomcat-知识" class="headerlink" title="补充 tomcat 知识"></a>补充 tomcat 知识</h2><h3 id="默认虚拟主机"><a href="#默认虚拟主机" class="headerlink" title="默认虚拟主机"></a>默认虚拟主机</h3><p>我们知道，server.xml 中可以配置多个 host，在 engine 标签中可以修改 default 属性，即浏览器直接访问 ip 地址时，访问的哪一个虚拟主机。</p>
+<h3 id="默认-web-application"><a href="#默认-web-application" class="headerlink" title="默认 web application"></a>默认 web application</h3><p>一个虚拟主机中可以部署多个 web 应用。当浏览器指定了虚拟主机（或者 tomcat 知道了需要访问哪一个主机），没有指定 web 应用时，tomcat 会看 server.xml 中 host 标签，或者 $CATALINA_HOME/conf /Catalina/localhost 目录下有没有 context 标签的 path 属性设置为空，有的话，访问这个 web 应用。没有的话，访问 Tomcat/webapps/ROOT 应用（新下载的 tomcat 就是这种方式）。再没有的话，就报错。</p>
+<h3 id="默认主页"><a href="#默认主页" class="headerlink" title="默认主页"></a>默认主页</h3><p>一个 web 应用中可以有很多个页面，当浏览器指定了 web 应用（或者 tomcat 知道了需要访问哪一个 web 应用），没有指定页面时，会有两种情况，自己不太确定会发生哪一种。凭感觉第二种更可能。</p>
+<ol>
+<li>tomcat 会访问 web.xml 中匹配了所有路径的 servlet。若没有这个 servlet，或者 这个 servlet 没有指定返回的页面时，就会访问欢迎页面。欢迎页面说明见下面。</li>
+<li>tomcat 会直接指定为欢迎页面，页面确定后，就是正常的处理流程了。如果没有欢迎页面，则访问 web.xml 中匹配了所有路径的 servlet。</li>
+</ol>
+<p><strong>经过自己测试，发现是第二种。</strong></p>
+<h4 id="web-xml-中欢迎页面"><a href="#web-xml-中欢迎页面" class="headerlink" title="web.xml 中欢迎页面"></a>web.xml 中欢迎页面</h4><pre><code>&lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+    &lt;welcome-file&gt;index1.jsp&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;
+</code></pre><p>上面的例子指定了2个欢迎页面，显示时按顺序从第一个找起，如果第一个存在，就显示第一个，后面的不起作用。如果第一个不存在，就找第二个，以此类推。</p>
+<p>关于欢迎页面：访问一个网站时，默认看到的第一个页面就叫欢迎页，一般情况下是由首页来充当欢迎页的。一般情况下，我们会在web.xml中指定欢迎页。但web.xml并不是一个Web的必要文件，没有web.xml，网站仍然是可以正常工作的。只不过网站的功能复杂起来后，web.xml的确有非常大用处，所以，默认创建的动态web工程在WEB-INF文件夹下面都有一个web.xml文件。</p>
+<p>对于tomcat来说，当你只指定一个web的根名，没有指定具体页面，去访问时一个web时，如果web.xml文件中配置了欢迎页，那么就返回指定的那个页面作为欢迎页，而在文中没有web.xml文件，或虽然有web.xml，但web.xml也没指定欢迎页的情况下，它默认先查找index.html文件，如果找到了，就把index.html作为欢迎页还回给浏览器。如果没找到index.html，tomcat就去找index.jsp。找到index.jsp就把它作为欢迎页面返回。而如果index.html和index.jsp都没找到，又没有用web.xml文件指定欢迎页面，那此时tomcat就不知道该返回哪个文件了，它就显示The requested resource (/XXX) is not available(我就出现过这个问题)的页面。其中XXX表示web的根名。但如果你指定了具体页面，是可以正常访问的。</p>
+<p>因为 tomcat/conf/web.xml 中有如下内容：</p>
+<pre><code>&lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;
+    &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;
+    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;
+&lt;/welcome-file-list&gt;
+</code></pre><p>参考网页：<a href="http://www.cnblogs.com/hxsyl/p/3435412.html" target="_blank" rel="external">http://www.cnblogs.com/hxsyl/p/3435412.html</a></p>
+<h4 id="results-标签"><a href="#results-标签" class="headerlink" title="results 标签"></a>results 标签</h4><p><strong>default results type</strong></p>
+<pre><code>&lt;result-types&gt;
+   &lt;result-type name=&quot;dispatcher&quot; default=&quot;true&quot;
+                class=&quot;org.apache.struts2.dispatcher.ServletDispatcherResult&quot; /&gt;
+&lt;/result-types&gt;
+</code></pre><p>If a type attribute is not specified, the framework will use the default dispatcher type, which forwards to another web resource. If the resource is a JavaServer Page, then the container will render it, using its JSP engine.</p>
+<p><strong>Result element without defaults</strong></p>
+<pre><code>&lt;result name=&quot;success&quot; type=&quot;dispatcher&quot;&gt;
+    &lt;param name=&quot;location&quot;&gt;/ThankYou.jsp&lt;/param&gt;
+&lt;/result&gt;
+</code></pre><p>或者</p>
+<pre><code>&lt;result&gt;/ThankYou.jsp&lt;/result&gt;
+</code></pre><p>Tips：results 标签必须设置三个值：name,type,location。name 默认为“success”，type 默认为“dispatcher”。</p>
+<h2 id="struts2"><a href="#struts2" class="headerlink" title="struts2"></a>struts2</h2><h3 id="struts-xml"><a href="#struts-xml" class="headerlink" title="struts.xml"></a>struts.xml</h3><p>package 标签作用：用来解决 package 中 action 重名的情况。</p>
+<p>package提供了将多个Action组织为一个模块的方式。<br>package的名字必须是唯一的 package可以扩展，当一个package扩展自另一个package时该package会在本身配置的基础上加入扩展的package<br>的配置，父package必须在子package前配置。</p>
+<p>abstract:设置package的属性为抽象的，抽象的package不能定义action。</p>
+<p>官网标签说明：<a href="https://struts.apache.org/docs/package-configuration.html" target="_blank" rel="external">https://struts.apache.org/docs/package-configuration.html</a></p>
+<h4 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h4><p>namespace决定了action的访问路径，默认为””，可以接收所有路径的action。<br><br>namespace可以写为/，或者/xxx，或者/xxx/yyy，对应的action访问路径为/index.action，<br>/xxx/index.action，或者/xxx/yyy/index.action.<br><br>namespace 最好也用模块来进行命名。</p>
+<p>namespace 默认值为空字符串（“”）时，处理其他 package 中同名 action 处理不了的请求。即没有更精确 namespace 匹配时，用这个action。</p>
+<h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><p>具体视图的返回可以由用户自己定义的Action来决定。<br><br>具体的手段是根据返回的字符串找到对应的配置项，来决定视图的内容。<br><br>具体Action的实现可以是一个普通的java类，里面有public String execute方法即可。<br><br>或者实现Action接口。<br><br>不过最常用的是从ActionSupport继承，好处在于可以直接使用Struts2封装好的方法。<br></p>
+<p>当 action 标签中不配置 class 属性时，默认为 ActionSupport 类。<br>action 标签中 result 子标签默认 name=“result”。</p>
+<h5 id="路径问题"><a href="#路径问题" class="headerlink" title="路径问题"></a>路径问题</h5><p>struts2中的路径问题是根据action的路径而不是jsp路径来确定，所以尽量不要使用相对路径。<br><br>虽然可以用redirect方式解决，但redirect方式并非必要。<br><br>解决办法非常简单，统一使用绝对路径。（在jsp中用request.getContextRoot方式来拿到webapp的路径）。<br>或者指定basePath。</p>
+<h5 id="DMI"><a href="#DMI" class="headerlink" title="DMI"></a>DMI</h5><p>The default entry method to the handler class is defined by the Action interface.<br>Sometimes, developers like to create more than one entry point to an Action. A different entry point can be specified by the method attribute.</p>
+<p>Action执行的时候并不一定要执行execute方法。<br><br>可以在配置文件中配置Action的时候用method=来指定执行哪个方法，也可以在url地址中动态指定（动态方法调用DMI）（推荐）。<br><br>前者会产生太多的action，所以不推荐使用。</p>
+<h5 id="action-的通配符匹配"><a href="#action-的通配符匹配" class="headerlink" title="action 的通配符匹配"></a>action 的通配符匹配</h5><pre><code>&lt;action name=&quot;Student*&quot; class=&quot;com.bjsxt.struts2.action.StudentAction&quot; method=&quot;{1}&quot;&gt;
+    &lt;result&gt;/Student{1}_success.jsp&lt;/result&gt;
+&lt;/action&gt;
+&lt;action name=&quot;*_*&quot; class=&quot;com.bjsxt.struts2.action.{1}Action&quot; method=&quot;{2}&quot;&gt;
+    &lt;result&gt;/{1}_{2}_success.jsp&lt;/result&gt;
+    &lt;!-- {0}_success.jsp --&gt;
+&lt;/action&gt;
+</code></pre><p>使用通配符，将配置量降到最低。<br><br>不过，一定要遵守”约定优于配置”的原则。</p>
+<h5 id="action-的属性接受参数"><a href="#action-的属性接受参数" class="headerlink" title="action 的属性接受参数"></a>action 的属性接受参数</h5><ol>
+<li>用 Action 的属性接受参数，通过请求的 url 传递给 action。<br>例子：/actionName!methodName?attributeName=attributeValue</li>
+<li>用 DomainModel 接受参数，也是通过请求的 url 传递给 action。<br>例子：/actionName!methodName?modelName.attributeName=attributeValue<br>当参数个数不匹配时，可以用 DTO 技术。(最常用)</li>
+<li>用 ModelDriven 传输参数，不常用。action 需要实现 ModelDriven 接口，请求的 url 与第一种一样。</li>
+</ol>
+<h5 id="获得-web-元素"><a href="#获得-web-元素" class="headerlink" title="获得 web 元素"></a>获得 web 元素</h5><p>action 中获得 Request,Session,Application 对象</p>
+<p>方法一：</p>
+<pre><code>Map request = (Map) ActionContext.getContetx().get(&quot;request&quot;);
+</code></pre><p>方法二：<br>action 实现 RequestAware,SessionAware,ApplicationAware 接口。<br>通过 DI（依赖注入）、IoC（控制反转）获得 request,session,application 对象。（只用这种）</p>
+<p>action 中获得 HttpServletRequest,HttpSession,ServletContext 对象</p>
+<p>方法一：（基本不用）</p>
+<pre><code>HttpServletRequest request = ServletActionContext.getRequest();
+HttpSession session = request.getSession();
+ServletContext application = session.getServletContext();
+</code></pre><p>方法二：</p>
+<p>action 实现 ServletRequestAware 接口。<br>也是通过依赖注入获得对象。</p>
+<p>jsp 页面中获得 web 元素</p>
+<pre><code>&lt;s:property value=&quot;#request.r1&quot;/&gt; | &lt;%=request.getAttribute(&quot;r1&quot;) %&gt;
+</code></pre><p>附上 struts2 架构图<br><img src="http://struts.apache.org/docs/big-picture.data/Struts2-Architecture.png" alt=""></p>
+<h2 id="struts1-与-struts2-区别"><a href="#struts1-与-struts2-区别" class="headerlink" title="struts1 与 struts2 区别"></a>struts1 与 struts2 区别</h2><h3 id="struts1"><a href="#struts1" class="headerlink" title="struts1"></a>struts1</h3><ol>
+<li>基于Servlet(ActionServlet),actionForm众多(类的爆炸),action单例(数据安全[线程安全]问题).</li>
+<li>将所有任务的解决都集于一身.(不容易扩展和定制)</li>
+<li>action位于控制层. extends Action{…}</li>
+<li>action更struts1的action和原生servlet api(HttpServletRequest,HttpServlerResponse)绑定在一起,因此不容易测试,需要部署到web容器中进行测试.</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegisterAction</span> <span class="keyword">extends</span> <span class="title">Action</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> ActionForward <span class="title">execute</span><span class="params">(ActionMapping mapping, ActionForm form,</span></span></div><div class="line">		HttpServletRequest request, HttpServletResponse response)</div><div class="line">		<span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomerAction</span> <span class="keyword">extends</span> <span class="title">DispatchAction</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> ActionForward <span class="title">save</span><span class="params">(ActionMapping,ActionForm,Request,Response)</span></span>&#123;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> ActionForward <span class="title">update</span><span class="params">(ActionMapping ActionForm Request,Response)</span></span>&#123;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>&lt;action-mappings&gt;
+    &lt;action path=&quot;/customerAction&quot;
+            name=&quot;customerForm&quot;
+            scope=&quot;request|session&quot;
+            validate=&quot;true&quot;
+            input=&quot;/xxx.jsp&quot;
+            forward=&quot;/xxx.jsp&quot;
+            type=&quot;xxxx..CustomerAction&quot;
+            parameter=&quot;method&quot;&gt;
+    &lt;/action&gt;
+&lt;/action-mappings&gt;
+</code></pre><p>访问方式：<a href="http://xxx/sss/customerAction.do?method=save，其中" target="_blank" rel="external">http://xxx/sss/customerAction.do?method=save，其中</a> method=save 表示传递了 method 参数，值为 save。</p>
+<p><strong>可以在 action 标签的forward 属性中设置，action产生的结果 forward 到哪一个 jsp。也可以在 action 对象返回的 ActionForward 对象中指定。</strong></p>
+<h4 id="action-execute-方法"><a href="#action-execute-方法" class="headerlink" title="action execute 方法"></a>action execute 方法</h4><p><strong>数据的传递</strong></p>
+<p>可以把消息存放在 request 域中，jsp 文件通过 EL 表达式获取 。</p>
+<pre><code>request.setAttribute(&quot;message&quot;, &quot;注册成功！！&quot;);
+</code></pre><p>jsp 文件中内容：</p>
+<pre><code>${message}
+</code></pre><p><strong>forward 到哪一个 jsp</strong></p>
+<p>可以在 action返回的 ActionForward 对象中指定 forward 到哪一个 jsp:</p>
+<pre><code>return new ActionForward(&quot;/message.jsp&quot;);
+</code></pre><p>也可以在 action 标签的forward 属性中设置 forward 到哪一个 jsp 后，</p>
+<pre><code>&lt;forward name=&quot;message&quot; path=&quot;/message.jsp&quot;&gt;&lt;/forward&gt;
+</code></pre><p>代码中可以直接写:</p>
+<pre><code>return mapping.findForward(&quot;message&quot;);//会找到配置文件中 name=&quot;message&quot; 的 forward 标签。
+</code></pre><h3 id="struts2-1"><a href="#struts2-1" class="headerlink" title="struts2"></a>struts2</h3><ol>
+<li>基于filter,没有actionform,action(原型的,独占).</li>
+<li>seperate aware:分离关注.解耦.(interceptor,拦截器).</li>
+<li>action是模型层(接受参数+pojo).</li>
+<li>action不需要和struts的action和原生servlet API(HttpServletRequest,HttpServlerResponse)耦合在一起.所以更容易测试,不需要一定要部署到web环境中进行测试.</li>
+<li><p>struts2是更加整洁的mvc框架(原因是采用了seperate aware技术,实现任务的拆解).</p>
+<p> <constant name="struts.devMode" value="true"></constant></p>
+ <package name="front" extends="struts-default" namespace="/"><br>     <action name="index" class="com.bjsxt.struts2.front.action.IndexAction1"><br>         <result name="success">/xxx.jsp</result><br>     </action><br> </package>
+
+</li>
+</ol>
+<p><strong>可以直接在配置文件中 result 标签中设置，action产生的结果 forward 到哪一个 jsp。</strong></p>
+<p>jsp 中可以使用 &lt;s:property&gt; 标签获得 value stack 中内容。</p>
+<h3 id="顺带也说一下不用框架，直接访问-servlet-对象情况"><a href="#顺带也说一下不用框架，直接访问-servlet-对象情况" class="headerlink" title="顺带也说一下不用框架，直接访问 servlet 对象情况"></a>顺带也说一下不用框架，直接访问 servlet 对象情况</h3><p>在 web.xml 文件中配置如下：</p>
+<pre><code>&lt;servlet&gt;
+        &lt;servlet-name&gt;FirstServlet&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;cn.itcast.FirstServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;FirstServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/xxx&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre><p>tomcet 根据 url-pattern 来找到对应的 servlet-class 来相应请求。</p>
+<p><strong>产生的结果可以直接输出，也可以 forward 到 jsp。</strong></p>
+<pre><code>request.getRequestDispatcher(&quot;/xxx.jsp&quot;).forward(request, response);
+</code></pre>	  
 	</div>
 
 	<div>
@@ -129,9 +263,9 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-        
+				
+    	<li class="prev"><a href="/2017/07/04/struts2 中 struts2-rest-showcase 例子解读/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -213,7 +347,7 @@
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/后台/">后台<span>3</span></a></li>
+    <li><a href="/categories/后台/">后台<span>4</span></a></li>
   </li>
 
     </ul>
@@ -236,7 +370,7 @@
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i>目录</a>
 	   <div id="toc" class="toc collapse in">
-			
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#补充-tomcat-知识"><span class="toc-article-text">补充 tomcat 知识</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#默认虚拟主机"><span class="toc-article-text">默认虚拟主机</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#默认-web-application"><span class="toc-article-text">默认 web application</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#默认主页"><span class="toc-article-text">默认主页</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#web-xml-中欢迎页面"><span class="toc-article-text">web.xml 中欢迎页面</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#results-标签"><span class="toc-article-text">results 标签</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#struts2"><span class="toc-article-text">struts2</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#struts-xml"><span class="toc-article-text">struts.xml</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#namespace"><span class="toc-article-text">namespace</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Action"><span class="toc-article-text">Action</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#路径问题"><span class="toc-article-text">路径问题</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#DMI"><span class="toc-article-text">DMI</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#action-的通配符匹配"><span class="toc-article-text">action 的通配符匹配</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#action-的属性接受参数"><span class="toc-article-text">action 的属性接受参数</span></a></li><li class="toc-article-item toc-article-level-5"><a class="toc-article-link" href="#获得-web-元素"><span class="toc-article-text">获得 web 元素</span></a></li></ol></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#struts1-与-struts2-区别"><span class="toc-article-text">struts1 与 struts2 区别</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#struts1"><span class="toc-article-text">struts1</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#action-execute-方法"><span class="toc-article-text">action execute 方法</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#struts2-1"><span class="toc-article-text">struts2</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#顺带也说一下不用框架，直接访问-servlet-对象情况"><span class="toc-article-text">顺带也说一下不用框架，直接访问 servlet 对象情况</span></a></li></ol></li></ol>
 		</div>
 	
 	</div>

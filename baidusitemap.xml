@@ -4,24 +4,16 @@
 
     
   <url>
-    <loc>https://liliechao.github.io/2017/06/28/http,servlet-java%20web%E5%90%8E%E5%8F%B0%E7%9F%A5%E8%AF%86%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2017-06-30T09:55:08.988Z</lastmod>
+    <loc>https://liliechao.github.io/2017/07/04/struts2%20%E4%B8%AD%20struts2-rest-showcase%20%E4%BE%8B%E5%AD%90%E8%A7%A3%E8%AF%BB/</loc>
+    <lastmod>2017-07-04T07:13:33.365Z</lastmod>
     <data>
         <display>
-        <title>http,servlet,jsp-java web后台知识简单总结</title>
-        <pubTime>2017-06-28T08:00:02.081Z</pubTime>
+        <title>struts2 中 struts2-rest-showcase 例子解读</title>
+        <pubTime>2017-07-03T17:07:30.781Z</pubTime>
         
-        <tag>XML</tag>
+        <tag>struts2</tag>
          
-        <tag>tomcat</tag>
-         
-        <tag>http</tag>
-         
-        <tag>servlet</tag>
-         
-        <tag>jsp</tag>
-         
-        <tag>servletFilter</tag>
+        <tag>REST</tag>
          
          
            
@@ -34,14 +26,64 @@
 
     
   <url>
+    <loc>https://liliechao.github.io/2017/07/04/maven,karaf%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2017-07-04T07:12:33.432Z</lastmod>
+    <data>
+        <display>
+        <title>maven,OSGI,karaf 学习笔记</title>
+        <pubTime>2017-07-03T17:10:04.927Z</pubTime>
+        
+        <tag>maven</tag>
+         
+        <tag>OSGI</tag>
+         
+        <tag>karaf</tag>
+         
+         
+           
+             
+              <breadCrumb title="opendaylight" url="https://liliechao.github.io/categories/opendaylight/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://liliechao.github.io/2017/06/30/struts-java%20web%E5%90%8E%E5%8F%B0%E7%9F%A5%E8%AF%86%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2017-06-30T08:46:05.203Z</lastmod>
+    <lastmod>2017-07-03T19:14:08.826Z</lastmod>
     <data>
         <display>
         <title>struts-java web后台知识简单总结</title>
         <pubTime>2017-06-30T08:43:15.960Z</pubTime>
         
         <tag>struts</tag>
+         
+         
+           
+             
+              <breadCrumb title="后台" url="https://liliechao.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://liliechao.github.io/2017/06/28/http,servlet-java%20web%E5%90%8E%E5%8F%B0%E7%9F%A5%E8%AF%86%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2017-06-30T10:11:43.222Z</lastmod>
+    <data>
+        <display>
+        <title>http,servlet,jsp-java web后台知识简单总结</title>
+        <pubTime>2017-06-28T08:00:02.081Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>servlet</tag>
+         
+        <tag>jsp</tag>
+         
+        <tag>servletFilter</tag>
          
          
            
