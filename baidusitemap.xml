@@ -3,6 +3,31 @@
 
 
     
+    
+  <url>
+    <loc>https://liliechao.github.io/2017/07/04/maven,karaf%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2017-07-04T07:24:05.259Z</lastmod>
+    <data>
+        <display>
+        <title>maven,OSGI,karaf 学习笔记</title>
+        <pubTime>2017-07-03T17:10:04.927Z</pubTime>
+        
+        <tag>maven</tag>
+         
+        <tag>OSGI</tag>
+         
+        <tag>karaf</tag>
+         
+         
+           
+             
+              <breadCrumb title="opendaylight" url="https://liliechao.github.io/categories/opendaylight/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
   <url>
     <loc>https://liliechao.github.io/2017/07/04/struts2%20%E4%B8%AD%20struts2-rest-showcase%20%E4%BE%8B%E5%AD%90%E8%A7%A3%E8%AF%BB/</loc>
     <lastmod>2017-07-04T07:13:33.365Z</lastmod>
@@ -19,30 +44,6 @@
            
              
               <breadCrumb title="后台" url="https://liliechao.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://liliechao.github.io/2017/07/04/maven,karaf%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2017-07-04T07:12:33.432Z</lastmod>
-    <data>
-        <display>
-        <title>maven,OSGI,karaf 学习笔记</title>
-        <pubTime>2017-07-03T17:10:04.927Z</pubTime>
-        
-        <tag>maven</tag>
-         
-        <tag>OSGI</tag>
-         
-        <tag>karaf</tag>
-         
-         
-           
-             
-              <breadCrumb title="opendaylight" url="https://liliechao.github.io/categories/opendaylight/"/>
           
         </display>
     </data>
@@ -116,7 +117,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>https://liliechao.github.io/2017/06/13/%E5%B8%A6%E5%AE%BD%E4%B8%8E%E5%BB%B6%E6%97%B6%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/</loc>

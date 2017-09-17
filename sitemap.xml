@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://liliechao.github.io/2017/07/04/struts2%20%E4%B8%AD%20struts2-rest-showcase%20%E4%BE%8B%E5%AD%90%E8%A7%A3%E8%AF%BB/</loc>
+    <loc>https://liliechao.github.io/about/index.html</loc>
     
-    <lastmod>2017-07-04T07:13:33.365Z</lastmod>
+    <lastmod>2017-09-17T13:33:12.467Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://liliechao.github.io/2017/07/04/maven,karaf%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     
-    <lastmod>2017-07-04T07:12:33.432Z</lastmod>
+    <lastmod>2017-07-04T07:24:05.259Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://liliechao.github.io/2017/07/04/struts2%20%E4%B8%AD%20struts2-rest-showcase%20%E4%BE%8B%E5%AD%90%E8%A7%A3%E8%AF%BB/</loc>
+    
+    <lastmod>2017-07-04T07:13:33.365Z</lastmod>
     
   </url>
   
@@ -33,13 +40,6 @@
     <loc>https://liliechao.github.io/2017/06/28/XML,tomcat-java%20web%E5%90%8E%E5%8F%B0%E7%9F%A5%E8%AF%86%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2017-06-30T07:09:37.812Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://liliechao.github.io/about/index.html</loc>
-    
-    <lastmod>2017-06-23T06:45:06.094Z</lastmod>
     
   </url>
   
